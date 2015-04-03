@@ -46,7 +46,7 @@ public class TestList {
         strings.reverse();
         strings.display();
         
-        //use with care - no rear yet and last element is missing.
+        //use with care - no rear yet and last element is null.
         List<Integer> clone = integers.clone();
         clone.delete_byIndex(0);
         clone.display();
