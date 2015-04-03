@@ -118,11 +118,32 @@ public class List<T> {
 													// exception?
 
 	}
+	
+	public List<T> clone () {
+		List <T> clone = new List<>();
+		clone.front = front.clone();
+		
+		clone.countElems();
+		return clone;
+	}
 
-	// public List<T> concat(List<T> other) {
-	// List<T> conned = new List<T>();
-	// for (T elem: this)
-	// }
+private void countElems() {
+		int counter = 0;
+		for (Node<T> it = front; it != null; it = it.next) {
+			counter++;
+		}
+		numberOfElems = counter;
+		
+	}
+
+//	public List<T> concat(List<T> other) {
+//		if (other.numberOfElems == 0) {
+//			return
+//		}
+//		List<T> conned = new List<T>();
+//		
+//	}
+	
 
 	public void delete_byIndex(int index) {
 		if (index >= 0 && index < numberOfElems) {

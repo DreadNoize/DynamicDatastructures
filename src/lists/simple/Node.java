@@ -8,12 +8,17 @@ public class Node<T> {
     public Node<T> next;
     private T data;
 
-    public Node(T dataVal) {
-        this.data = dataVal;
+    public Node(T data) {
+        this.data = data;
         this.next = null;
     }
 
-    public void setNext(Node<T> next) {
+    public Node(T data, Node<T> next) {
+    	this.data = data;
+    	this.next = next;
+    }
+
+	public void setNext(Node<T> next) {
         this.next = next;
     }
 
@@ -23,5 +28,12 @@ public class Node<T> {
 
     public String toString() {
         return data.toString();
+    }
+    
+    public Node<T> clone() {
+    	System.out.println(this);
+    	if ( this.next != null)
+    		return new Node<T> (data, next.clone());
+    	else return this;
     }
 }

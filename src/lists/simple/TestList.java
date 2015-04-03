@@ -42,6 +42,11 @@ public class TestList {
         integers.display();
         System.out.println(integers.indexOf(5));
         System.out.println(integers.getNode(8));
+        
+        List<Integer> clone = integers.clone();
+        clone.delete_byIndex(0);
+        clone.display();
+        integers.display();
 
     }
 }
