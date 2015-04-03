@@ -34,12 +34,17 @@ public class List<T> {
 	public boolean isEmpty() {
 		return front == null;
 	}
-	
+
 	public Node<T> getNode(int index) {
-		Node<T> it = front;
-		for (int i = 0; it != null && i < index; ++i)
-			it = it.next;
-		return it; 
+		if (index < numberOfElems && index >= 0) {
+			Node<T> it = front;
+			for (int i = 0; it != null && i < index; ++i)
+				it = it.next;
+			return it;
+		} else {
+			System.out.println("Index out of bounds: " + index);
+			return null;
+		}
 	}
 
 	public void append(T data) {
@@ -83,7 +88,7 @@ public class List<T> {
 		if (index == 0) {
 			prepend(dataVal);
 		} else {
-			Node<T> it = getNode(index-1);
+			Node<T> it = getNode(index - 1);
 			if (it != null)
 				insert(it, dataVal);
 		}
@@ -108,7 +113,9 @@ public class List<T> {
 				index++;
 			}
 		}
-		return index < numberOfElems ? index : -1; // very ugly if used to Haskell 'Maybe a'. Throw exception?
+		return index < numberOfElems ? index : -1; // very ugly if used to
+													// Haskell 'Maybe a'. Throw
+													// exception?
 
 	}
 
@@ -117,38 +124,24 @@ public class List<T> {
 	// for (T elem: this)
 	// }
 
-	
 	public void delete_byIndex(int index) {
-		if (index >= 0) {
-			if(index == 0) {
+		if (index >= 0 && index < numberOfElems) {
+			if (index == 0) {
 				front = front.next;
 				numberOfElems--;
 			} else {
-				
+				Node<T> toDeletePrev = getNode(index-1);
+				toDeletePrev.next = toDeletePrev.next.next;
+				if(toDeletePrev.next == null) {
+					rear = toDeletePrev;
+				}
+				numberOfElems--;
 			}
 		}
 	}
-	// public void delete_byVal(T dataVal) {
-	// if (front != null && front.getData().equals(dataVal)) {
-	// front = front.next;
-	// if (front == null) {
-	// rear = null;
-	// }
-	// numberOfElems--;
-	// } else if (front != null) {
-	// Node<T> it = front;
-	// while (it.next != null) {
-	// Node<T> n = it.next;
-	// if (n.getData().equals(dataVal)) {
-	// if (n.next == null) {
-	// rear = it;
-	// }
-	// it.next = n.next;
-	// numberOfElems--;
-	// break;
-	// }
-	// }
-	// }
-	// }
-
+	
+	public void delete_byVal(T data) {
+		delete_byIndex(indexOf(data));
+	}
+	
 }

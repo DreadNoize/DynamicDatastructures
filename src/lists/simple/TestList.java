@@ -21,23 +21,27 @@ public class TestList {
         List<String> strings = new List<String>(s1, s2, s3, s4);
 
         List<Boolean> bools = new List<Boolean>();
+        System.out.println("Boolean list display, delete and append methods: ");
         bools.display();
         bools.append(true);
         bools.append(false);
         bools.append(false);
         bools.append(true);
         bools.addAt(0, false);
-//        l3.delete_byVal(true);
-//        l2.delete_byVal("work."); here be dragons.
-
-        strings.display();
+        bools.delete_byVal(true);
+        bools.delete_byVal(false);
         bools.display();
+
+        System.out.println("Strings delete index 3:");
+        strings.display();
+        strings.delete_byIndex(3);
+        strings.display();
+
+        System.out.println("Integers addAt 9 10, indexOf 5, getNode 8:");
         integers.addAt(9, 10);
         integers.display();
-        System.out.println(bools.indexOf(true));
-        strings.delete_byIndex(0);
-        strings.display();
-        System.out.println(integers.getNode(2));
+        System.out.println(integers.indexOf(5));
+        System.out.println(integers.getNode(8));
 
     }
 }
