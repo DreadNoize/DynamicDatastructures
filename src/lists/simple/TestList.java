@@ -26,12 +26,18 @@ public class TestList {
         bools.append(false);
         bools.append(false);
         bools.append(true);
+        bools.addAt(0, false);
 //        l3.delete_byVal(true);
 //        l2.delete_byVal("work."); here be dragons.
 
         strings.display();
         bools.display();
+        integers.addAt(9, 10);
         integers.display();
+        System.out.println(bools.indexOf(true));
+        strings.delete_byIndex(0);
+        strings.display();
+        System.out.println(integers.getNode(2));
 
     }
 }

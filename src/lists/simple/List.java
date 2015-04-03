@@ -34,6 +34,13 @@ public class List<T> {
 	public boolean isEmpty() {
 		return front == null;
 	}
+	
+	public Node<T> getNode(int index) {
+		Node<T> it = front;
+		for (int i = 0; it != null && i < index; ++i)
+			it = it.next;
+		return it; 
+	}
 
 	public void append(T data) {
 		Node<T> n = new Node<T>(data);
@@ -43,7 +50,6 @@ public class List<T> {
 		} else {
 			rear.setNext(n);
 			rear = n;
-			n.setNext(null); // redundant?
 		}
 		numberOfElems++;
 	}
@@ -77,9 +83,7 @@ public class List<T> {
 		if (index == 0) {
 			prepend(dataVal);
 		} else {
-			Node<T> it = front;
-			for (int i = 1; it != null && i < index; ++i)
-				it = it.next;
+			Node<T> it = getNode(index-1);
 			if (it != null)
 				insert(it, dataVal);
 		}
@@ -95,6 +99,35 @@ public class List<T> {
 		numberOfElems++;
 	}
 
+	public int indexOf(T data) {
+		int index = 0;
+		for (Node<T> it = front; it != null; it = it.next) {
+			if (it.getData().equals(data)) {
+				break;
+			} else {
+				index++;
+			}
+		}
+		return index < numberOfElems ? index : -1; // very ugly if used to Haskell 'Maybe a'. Throw exception?
+
+	}
+
+	// public List<T> concat(List<T> other) {
+	// List<T> conned = new List<T>();
+	// for (T elem: this)
+	// }
+
+	
+	public void delete_byIndex(int index) {
+		if (index >= 0) {
+			if(index == 0) {
+				front = front.next;
+				numberOfElems--;
+			} else {
+				
+			}
+		}
+	}
 	// public void delete_byVal(T dataVal) {
 	// if (front != null && front.getData().equals(dataVal)) {
 	// front = front.next;
