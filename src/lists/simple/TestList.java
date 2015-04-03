@@ -43,6 +43,10 @@ public class TestList {
         System.out.println(integers.indexOf(5));
         System.out.println(integers.getNode(8));
         
+        strings.reverse();
+        strings.display();
+        
+        //use with care - no rear yet and last element is missing.
         List<Integer> clone = integers.clone();
         clone.delete_byIndex(0);
         clone.display();

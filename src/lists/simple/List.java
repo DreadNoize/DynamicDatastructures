@@ -164,5 +164,22 @@ private void countElems() {
 	public void delete_byVal(T data) {
 		delete_byIndex(indexOf(data));
 	}
+
+	public void reverse() {
+		Node<T> nextEntry, head;
+		Node<T> temp = null;
+		if (!isEmpty()) {
+			head = front;
+			while (head.next != null) {
+				nextEntry = head.next;
+				head.next = temp;
+				temp = head;
+				head = nextEntry;
+			};
+			head.next = temp;
+			temp = front; front = rear; rear = temp;
+			}
+		}
+	}
 	
-}
+
