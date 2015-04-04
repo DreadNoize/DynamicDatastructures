@@ -126,9 +126,9 @@ public class List<T> {
 		numberOfElems++;
 	}
 
-	public void insertAfterNode(Node<T> it, T dataVal) {
+	public void insertAfterNode(Node<T> it, T data) {
 		assert it != null : "cannot insert after null!";
-		Node<T> toInsert = new Node<T>(dataVal);
+		Node<T> toInsert = new Node<T>(data);
 
 		if (it.next == null) {
 			setRear(toInsert);
@@ -139,13 +139,13 @@ public class List<T> {
 		numberOfElems++;
 	}
 
-	public void addAtIndex(int index, T dataVal) {
+	public void addAtIndex(int index, T data) {
 		if (index == 0) {
-			prepend(dataVal);
+			prepend(data);
 		} else {
 			Node<T> it = getNode(index - 1);
 			if (it != null)
-				insertAfterNode(it, dataVal);
+				insertAfterNode(it, data);
 		}
 	}
 
