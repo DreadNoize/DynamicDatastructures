@@ -34,7 +34,7 @@ public class Node<T> {
 	public String toString() {
 		return data.toString();
 	}
-
+	
 	public Node<T> cloneRec(List<T> parent) {
 		System.out.println(this);
 		if (this.next != null)
