@@ -29,7 +29,7 @@ public class TestList {
 		bools.append(false);
 		bools.append(false);
 		bools.append(true);
-		bools.addAt(0, false);
+		bools.addAtIndex(0, false);
 		bools.delete_byVal(true);
 		bools.delete_byVal(false);
 		System.out.println(bools);
@@ -43,7 +43,7 @@ public class TestList {
 
 		System.out.println("\n" + "Integers addAt 9 10, indexOf 5, getNode 8:"
 				+ "\n");
-		integers.addAt(9, 10);
+		integers.addAtIndex(9, 10);
 		System.out.println(integers);
 		System.out.println(integers.indexOf(5));
 		System.out.println(integers.getNode(8));
