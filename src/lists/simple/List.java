@@ -105,13 +105,13 @@ public class List<T> {
 	}
 
 	public void append(T data) {
-		Node<T> n = new Node<T>(data);
+		Node<T> toAppend = new Node<T>(data);
 		if (isEmpty()) {
-			front = n;
-			setRear(n);
+			front = toAppend;
+			setRear(toAppend);
 		} else {
-			getRear().setNext(n);
-			setRear(n);
+			getRear().setNext(toAppend);
+			setRear(toAppend);
 		}
 		numberOfElems++;
 	}
@@ -238,11 +238,10 @@ public class List<T> {
 		if(start >= 0 && end > start && end <= numberOfElems) {
 			List<T> sublist = this.clone();
 			sublist.makeRear(sublist.getNode(end-1));
-			//System.out.println(sublist.rear);
 			sublist.front = sublist.getNode(start);
 			return sublist;
 		}
-		System.out.println("Invalid slice!");
+		System.out.println("Invalid slice!"); // exception
 		return null;
 	}
 
