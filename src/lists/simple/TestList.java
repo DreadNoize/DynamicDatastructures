@@ -48,8 +48,10 @@ public class TestList {
         
         //use with care - no rear yet and last element is null.
         List<Integer> clone = integers.clone();
-        clone.delete_byIndex(0);
+        //clone.delete_byIndex(0);
+        clone.getNode(9).setData(6);
         clone.display();
+        
         integers.display();
 
     }

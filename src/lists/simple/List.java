@@ -12,7 +12,7 @@ public class List<T> {
 
 	public List() {
 		front = null;
-		rear = null;
+		setRear(null);
 	}
 
 	public List(Node<T>... ns) {
@@ -25,6 +25,14 @@ public class List<T> {
 		for (T value : vs) {
 			append(value);
 		}
+	}
+
+	public Node<T> getRear() {
+		return rear;
+	}
+
+	public void setRear(Node<T> rear) {
+		this.rear = rear;
 	}
 
 	public int getNumberOfElems() {
@@ -51,10 +59,10 @@ public class List<T> {
 		Node<T> n = new Node<T>(data);
 		if (isEmpty()) {
 			front = n;
-			rear = n;
+			setRear(n);
 		} else {
-			rear.setNext(n);
-			rear = n;
+			getRear().setNext(n);
+			setRear(n);
 		}
 		numberOfElems++;
 	}
@@ -67,7 +75,7 @@ public class List<T> {
 			for (Node<T> it = front; it.next != null; it = it.next) {
 				System.out.print(it + ", ");
 			}
-			System.out.println(rear);
+			System.out.println(getRear());
 		}
 	}
 
@@ -76,7 +84,7 @@ public class List<T> {
 		Node<T> toInsert = new Node<T>(dataVal);
 
 		if (it.next == null) {
-			rear = toInsert;
+			setRear(toInsert);
 		} else {
 			toInsert.next = it.next;
 		}
@@ -98,7 +106,7 @@ public class List<T> {
 		Node<T> toPrepend = new Node<T>(data);
 		toPrepend.next = front;
 		if (toPrepend.next == null) {
-			rear = toPrepend;
+			setRear(toPrepend);
 		}
 		front = toPrepend;
 		numberOfElems++;
@@ -118,32 +126,46 @@ public class List<T> {
 													// exception?
 
 	}
-	
-	public List<T> clone () {
-		List <T> clone = new List<>();
-		clone.front = front.clone();
-		
+
+	public List<T> clone() {
+		List<T> clone = new List<T>();
+		if (numberOfElems <= 0) {
+			return clone;
+		} else if (numberOfElems == 1) {
+			clone.append(front.getData());
+			return clone;
+		} else {
+			for (Node<T> it = front; it != null; it = it.next) {
+				clone.append(it.getData());
+			}
+			return clone;
+		}
+	}
+
+	public List<T> cloneRec() {
+		List<T> clone = new List<>();
+		clone.front = front.cloneRec(this);
+
 		clone.countElems();
 		return clone;
 	}
 
-private void countElems() {
+	private void countElems() {
 		int counter = 0;
 		for (Node<T> it = front; it != null; it = it.next) {
 			counter++;
 		}
 		numberOfElems = counter;
-		
+
 	}
 
-//	public List<T> concat(List<T> other) {
-//		if (other.numberOfElems == 0) {
-//			return
-//		}
-//		List<T> conned = new List<T>();
-//		
-//	}
-	
+	// public List<T> concat(List<T> other) {
+	// if (other.numberOfElems == 0) {
+	// return
+	// }
+	// List<T> conned = new List<T>();
+	//
+	// }
 
 	public void delete_byIndex(int index) {
 		if (index >= 0 && index < numberOfElems) {
@@ -151,16 +173,16 @@ private void countElems() {
 				front = front.next;
 				numberOfElems--;
 			} else {
-				Node<T> toDeletePrev = getNode(index-1);
+				Node<T> toDeletePrev = getNode(index - 1);
 				toDeletePrev.next = toDeletePrev.next.next;
-				if(toDeletePrev.next == null) {
-					rear = toDeletePrev;
+				if (toDeletePrev.next == null) {
+					setRear(toDeletePrev);
 				}
 				numberOfElems--;
 			}
 		}
 	}
-	
+
 	public void delete_byVal(T data) {
 		delete_byIndex(indexOf(data));
 	}
@@ -175,11 +197,12 @@ private void countElems() {
 				head.next = temp;
 				temp = head;
 				head = nextEntry;
-			};
-			head.next = temp;
-			temp = front; front = rear; rear = temp;
 			}
+			head.next = temp;
+			temp = front;
+			front = getRear();
+			setRear(temp);
 		}
 	}
-	
 
+}
