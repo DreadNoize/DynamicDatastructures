@@ -33,7 +33,8 @@ public class List<T> {
 
 	private void setRear(Node<T> rear) {
 		this.rear = rear;
-		rear.next = null;
+		if (rear != null)
+			rear.next = null;
 	}
 
 	public int getNumberOfElems() {
@@ -54,7 +55,8 @@ public class List<T> {
 	}
 
 	public String toString() {
-		StringBuilder result = new StringBuilder("elements: " +  numberOfElems + ": ");
+		StringBuilder result = new StringBuilder("elements: " + numberOfElems
+				+ ": ");
 		if (isEmpty()) {
 			result.append("List is empty!");
 		} else {
@@ -65,12 +67,12 @@ public class List<T> {
 		}
 		return result.toString();
 	}
-	
-	public boolean contains (T data) {
-		if(numberOfElems == 0) 
+
+	public boolean contains(T data) {
+		if (numberOfElems == 0)
 			return false;
 		for (Node<T> it = front; it != null; it = it.next) {
-			if(data.equals(it.getData())) {
+			if (data.equals(it.getData())) {
 				return true;
 			}
 		}
@@ -198,7 +200,7 @@ public class List<T> {
 		} else {
 			for (Node<T> it = front; it != null; it = it.next) {
 				clone.append(it.getData());
-				
+
 			}
 			return clone;
 		}
@@ -217,8 +219,7 @@ public class List<T> {
 		List<T> connedTail = other.clone();
 		if (other.numberOfElems == 0) {
 			return connedInit;
-		}
-		else {
+		} else {
 			connedInit.rear.next = connedTail.front;
 			connedInit.rear = connedTail.rear;
 			connedInit.countElems();
@@ -226,19 +227,19 @@ public class List<T> {
 		}
 
 	}
-	
+
 	private void makeRear(Node<T> last) {
-		if(!(last.next == null)) { // do nothing if last is already rear
+		if (!(last.next == null)) { // do nothing if last is already rear
 			last.next = null;
 			this.rear = last;
 			countElems();
 		}
 	}
-	
+
 	public List<T> subList(int start, int end) {
-		if(start >= 0 && end > start && end <= numberOfElems) {
+		if (start >= 0 && end > start && end <= numberOfElems) {
 			List<T> sublist = this.clone();
-			sublist.makeRear(sublist.getNode(end-1));
+			sublist.makeRear(sublist.getNode(end - 1));
 			sublist.front = sublist.getNode(start);
 			return sublist;
 		}
