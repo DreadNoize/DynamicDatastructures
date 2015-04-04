@@ -64,6 +64,17 @@ public class List<T> {
 		}
 		return result.toString();
 	}
+	
+	public boolean contains (T data) {
+		if(numberOfElems == 0) 
+			return false;
+		for (Node<T> it = front; it != null; it = it.next) {
+			if(data.equals(it.getData())) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 	public Node<T> getNode(int index) {
 		if (index < numberOfElems && index >= 0) {

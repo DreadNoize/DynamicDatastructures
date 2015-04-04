@@ -1,7 +1,7 @@
 package lists.simple;
 
 /**
- * Created by ra on 02.04.15. Simple generic list tester.
+ * Created by ra on 02.04.15. 'Simple generic list' tester.
  */
 
 public class TestList {
@@ -56,6 +56,7 @@ public class TestList {
         System.out.println(integers.getNode(5) == integerClone.getNode(5));
         
         System.out.println(integers.concat(integerClone));
+        System.out.println(new List<String>().contains("This"));
 
     }
 }
