@@ -37,6 +37,14 @@ public class Node<T> {
 	public T getData() {
 		return data;
 	}
+	
+	public int index() {
+		int counter = 0;
+		for(Node<T> it = this; it != null; it = it.prev) {
+			counter++;
+		}
+		return counter;
+	}
 
 	public String toString() {
 		return data.toString();
