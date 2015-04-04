@@ -38,7 +38,7 @@ public class List<T> {
 	public int getNumberOfElems() {
 		return numberOfElems;
 	}
-	
+
 	private void countElems() {
 		int counter = 0;
 		for (Node<T> it = front; it != null; it = it.next) {
@@ -52,16 +52,17 @@ public class List<T> {
 		return front == null;
 	}
 
-	public void display() {
-		System.out.printf("%d elements: ", numberOfElems);
+	public String toString() {
+		StringBuilder result = new StringBuilder( numberOfElems + " elements: ");
 		if (isEmpty()) {
-			System.out.println("List is empty!");
+			result.append("0: List is empty!");
 		} else {
 			for (Node<T> it = front; it.next != null; it = it.next) {
-				System.out.print(it + ", ");
+				result.append(it + ", ");
 			}
-			System.out.println(getRear());
+			result.append(getRear());
 		}
+		return result.toString();
 	}
 
 	public Node<T> getNode(int index) {
@@ -75,7 +76,7 @@ public class List<T> {
 			return null;
 		}
 	}
-	
+
 	public int indexOf(T data) {
 		int index = 0;
 		for (Node<T> it = front; it != null; it = it.next) {
@@ -173,7 +174,7 @@ public class List<T> {
 			setRear(temp);
 		}
 	}
-	
+
 	public List<T> clone() {
 		List<T> clone = new List<T>();
 		if (numberOfElems <= 0) {
@@ -184,6 +185,7 @@ public class List<T> {
 		} else {
 			for (Node<T> it = front; it != null; it = it.next) {
 				clone.append(it.getData());
+				
 			}
 			return clone;
 		}
@@ -197,14 +199,19 @@ public class List<T> {
 		return clone;
 	}
 
+	public List<T> concat(List<T> other) {
+		List<T> connedInit = this.clone();
+		List<T> connedTail = other.clone();
+		if (other.numberOfElems == 0) {
+			return connedInit;
+		}
+		else {
+			connedInit.rear.next = connedTail.front;
+			connedInit.rear = connedTail.rear;
+			connedInit.countElems();
+			return connedInit;
+		}
 
-	// public List<T> concat(List<T> other) {
-	// if (other.numberOfElems == 0) {
-	// return
-	// }
-	// List<T> conned = new List<T>();
-	//
-	// }
-
+	}
 
 }

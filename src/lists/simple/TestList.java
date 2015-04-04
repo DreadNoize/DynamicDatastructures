@@ -22,7 +22,7 @@ public class TestList {
 
         List<Boolean> bools = new List<Boolean>();
         System.out.println("Boolean list display, delete and append methods: ");
-        bools.display();
+        System.out.println(bools);
         bools.append(true);
         bools.append(false);
         bools.append(false);
@@ -30,29 +30,32 @@ public class TestList {
         bools.addAt(0, false);
         bools.delete_byVal(true);
         bools.delete_byVal(false);
-        bools.display();
+        System.out.println(bools);
 
         System.out.println("Strings delete index 3:");
-        strings.display();
+        System.out.println(strings);
         strings.delete_byIndex(3);
-        strings.display();
+        System.out.println(strings);
 
         System.out.println("Integers addAt 9 10, indexOf 5, getNode 8:");
         integers.addAt(9, 10);
-        integers.display();
+        System.out.println(integers);
         System.out.println(integers.indexOf(5));
         System.out.println(integers.getNode(8));
         
         strings.reverse();
-        strings.display();
+        System.out.println(strings);
         
         //use with care - no rear yet and last element is null.
-        List<Integer> clone = integers.clone();
+        List<Integer> integerClone = integers.clone();
         //clone.delete_byIndex(0);
-        clone.getNode(9).setData(6);
-        clone.display();
+        integerClone.getNode(9).setData(6);
+        System.out.println(integerClone);
         
-        integers.display();
+        System.out.println(integers);
+        System.out.println(integers.getNode(5) == integerClone.getNode(5));
+        
+        System.out.println(integers.concat(integerClone));
 
     }
 }
