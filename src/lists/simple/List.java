@@ -38,9 +38,30 @@ public class List<T> {
 	public int getNumberOfElems() {
 		return numberOfElems;
 	}
+	
+	private void countElems() {
+		int counter = 0;
+		for (Node<T> it = front; it != null; it = it.next) {
+			counter++;
+		}
+		numberOfElems = counter;
+
+	}
 
 	public boolean isEmpty() {
 		return front == null;
+	}
+
+	public void display() {
+		System.out.printf("%d elements: ", numberOfElems);
+		if (isEmpty()) {
+			System.out.println("List is empty!");
+		} else {
+			for (Node<T> it = front; it.next != null; it = it.next) {
+				System.out.print(it + ", ");
+			}
+			System.out.println(getRear());
+		}
 	}
 
 	public Node<T> getNode(int index) {
@@ -53,6 +74,21 @@ public class List<T> {
 			System.out.println("Index out of bounds: " + index);
 			return null;
 		}
+	}
+	
+	public int indexOf(T data) {
+		int index = 0;
+		for (Node<T> it = front; it != null; it = it.next) {
+			if (it.getData().equals(data)) {
+				break;
+			} else {
+				index++;
+			}
+		}
+		return index < numberOfElems ? index : -1; // very ugly if used to
+													// Haskell 'Maybe a'. Throw
+													// exception?
+
 	}
 
 	public void append(T data) {
@@ -67,16 +103,14 @@ public class List<T> {
 		numberOfElems++;
 	}
 
-	public void display() {
-		System.out.printf("%d elements: ", numberOfElems);
-		if (isEmpty()) {
-			System.out.println("List is empty!");
-		} else {
-			for (Node<T> it = front; it.next != null; it = it.next) {
-				System.out.print(it + ", ");
-			}
-			System.out.println(getRear());
+	public void prepend(T data) {
+		Node<T> toPrepend = new Node<T>(data);
+		toPrepend.next = front;
+		if (toPrepend.next == null) {
+			setRear(toPrepend);
 		}
+		front = toPrepend;
+		numberOfElems++;
 	}
 
 	public void insert(Node<T> it, T dataVal) {
@@ -101,71 +135,6 @@ public class List<T> {
 				insert(it, dataVal);
 		}
 	}
-
-	public void prepend(T data) {
-		Node<T> toPrepend = new Node<T>(data);
-		toPrepend.next = front;
-		if (toPrepend.next == null) {
-			setRear(toPrepend);
-		}
-		front = toPrepend;
-		numberOfElems++;
-	}
-
-	public int indexOf(T data) {
-		int index = 0;
-		for (Node<T> it = front; it != null; it = it.next) {
-			if (it.getData().equals(data)) {
-				break;
-			} else {
-				index++;
-			}
-		}
-		return index < numberOfElems ? index : -1; // very ugly if used to
-													// Haskell 'Maybe a'. Throw
-													// exception?
-
-	}
-
-	public List<T> clone() {
-		List<T> clone = new List<T>();
-		if (numberOfElems <= 0) {
-			return clone;
-		} else if (numberOfElems == 1) {
-			clone.append(front.getData());
-			return clone;
-		} else {
-			for (Node<T> it = front; it != null; it = it.next) {
-				clone.append(it.getData());
-			}
-			return clone;
-		}
-	}
-
-	public List<T> cloneRec() {
-		List<T> clone = new List<>();
-		clone.front = front.cloneRec(this);
-
-		clone.countElems();
-		return clone;
-	}
-
-	private void countElems() {
-		int counter = 0;
-		for (Node<T> it = front; it != null; it = it.next) {
-			counter++;
-		}
-		numberOfElems = counter;
-
-	}
-
-	// public List<T> concat(List<T> other) {
-	// if (other.numberOfElems == 0) {
-	// return
-	// }
-	// List<T> conned = new List<T>();
-	//
-	// }
 
 	public void delete_byIndex(int index) {
 		if (index >= 0 && index < numberOfElems) {
@@ -204,5 +173,38 @@ public class List<T> {
 			setRear(temp);
 		}
 	}
+	
+	public List<T> clone() {
+		List<T> clone = new List<T>();
+		if (numberOfElems <= 0) {
+			return clone;
+		} else if (numberOfElems == 1) {
+			clone.append(front.getData());
+			return clone;
+		} else {
+			for (Node<T> it = front; it != null; it = it.next) {
+				clone.append(it.getData());
+			}
+			return clone;
+		}
+	}
+
+	public List<T> cloneRec() {
+		List<T> clone = new List<>();
+		clone.front = front.cloneRec(this);
+
+		clone.countElems();
+		return clone;
+	}
+
+
+	// public List<T> concat(List<T> other) {
+	// if (other.numberOfElems == 0) {
+	// return
+	// }
+	// List<T> conned = new List<T>();
+	//
+	// }
+
 
 }
