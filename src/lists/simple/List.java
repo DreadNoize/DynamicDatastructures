@@ -19,7 +19,7 @@ public class List<T> {
 		for (Node<T> node : ns) {
 			append(node.getData());
 		}
-	}
+	} // deprecate?
 
 	public List(T... vs) {
 		for (T value : vs) {
@@ -31,7 +31,7 @@ public class List<T> {
 		return rear;
 	}
 
-	public void setRear(Node<T> rear) {
+	private void setRear(Node<T> rear) {
 		this.rear = rear;
 	}
 
@@ -97,6 +97,7 @@ public class List<T> {
 				index++;
 			}
 		}
+		assert index < numberOfElems : data + " not contained in list!";
 		return index < numberOfElems ? index : -1; // very ugly if used to
 													// Haskell 'Maybe a'. Throw
 													// exception?
@@ -138,7 +139,7 @@ public class List<T> {
 		numberOfElems++;
 	}
 
-	public void addAt(int index, T dataVal) {
+	public void addAtIndex(int index, T dataVal) {
 		if (index == 0) {
 			prepend(dataVal);
 		} else {
@@ -225,7 +226,7 @@ public class List<T> {
 
 	}
 	
-	void makeRear(Node<T> last) {
+	private void makeRear(Node<T> last) {
 		if(!(last.next == null)) { // do nothing if last is already rear
 			last.next = null;
 			this.rear = last;
