@@ -53,9 +53,9 @@ public class List<T> {
 	}
 
 	public String toString() {
-		StringBuilder result = new StringBuilder( numberOfElems + " elements: ");
+		StringBuilder result = new StringBuilder("elements: " +  numberOfElems + ": ");
 		if (isEmpty()) {
-			result.append("0: List is empty!");
+			result.append("List is empty!");
 		} else {
 			for (Node<T> it = front; it.next != null; it = it.next) {
 				result.append(it + ", ");
@@ -125,7 +125,7 @@ public class List<T> {
 		numberOfElems++;
 	}
 
-	public void insert(Node<T> it, T dataVal) {
+	public void insertAfterNode(Node<T> it, T dataVal) {
 		assert it != null : "cannot insert after null!";
 		Node<T> toInsert = new Node<T>(dataVal);
 
@@ -144,7 +144,7 @@ public class List<T> {
 		} else {
 			Node<T> it = getNode(index - 1);
 			if (it != null)
-				insert(it, dataVal);
+				insertAfterNode(it, dataVal);
 		}
 	}
 
@@ -223,6 +223,26 @@ public class List<T> {
 			return connedInit;
 		}
 
+	}
+	
+	void makeRear(Node<T> last) {
+		if(!(last.next == null)) { // do nothing if last is already rear
+			last.next = null;
+			this.rear = last;
+			countElems();
+		}
+	}
+	
+	public List<T> subList(int start, int end) {
+		if(start >= 0 && end > start && end <= numberOfElems) {
+			List<T> sublist = this.clone();
+			sublist.makeRear(sublist.getNode(end-1));
+			//System.out.println(sublist.rear);
+			sublist.front = sublist.getNode(start);
+			return sublist;
+		}
+		System.out.println("Invalid slice!");
+		return null;
 	}
 
 }
