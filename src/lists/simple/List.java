@@ -33,6 +33,7 @@ public class List<T> {
 
 	private void setRear(Node<T> rear) {
 		this.rear = rear;
+		rear.next = null;
 	}
 
 	public int getNumberOfElems() {
