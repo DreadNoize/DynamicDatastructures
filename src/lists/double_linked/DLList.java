@@ -19,10 +19,6 @@ public class DLList<T> {
 		return front;
 	}
 
-	public void setFront(Node<T> front) {
-		this.front = front;
-	}
-
 	public DLList(Node<T>... ns) {
 		for (Node<T> node : ns) {
 			append(node.getData());
@@ -41,19 +37,23 @@ public class DLList<T> {
 
 	private void setRear(Node<T> rear) {
 		this.rear = rear;
+		if (rear != null)
+			rear.next = null;
 	}
 
 	public int getNumberOfElems() {
 		return numberOfElems;
 	}
 
-	private void countElems() {
+	// TODO: change back to private later! change return type back to void?
+	int countElems() {
 		int counter = 0;
 		for (Node<T> it = front; it != null; it = it.next) {
 			counter++;
 		}
 		numberOfElems = counter;
 
+		return numberOfElems;
 	}
 
 	public boolean isEmpty() {
@@ -61,7 +61,8 @@ public class DLList<T> {
 	}
 
 	public String toString() {
-		StringBuilder result = new StringBuilder("elements: " +  numberOfElems + ": ");
+		StringBuilder result = new StringBuilder("elements: " + numberOfElems
+				+ ": ");
 		if (isEmpty()) {
 			result.append("List is empty!");
 		} else {
@@ -72,12 +73,12 @@ public class DLList<T> {
 		}
 		return result.toString();
 	}
-	
-	public boolean contains (T data) {
-		if(numberOfElems == 0) 
+
+	public boolean contains(T data) {
+		if (numberOfElems == 0)
 			return false;
 		for (Node<T> it = front; it != null; it = it.next) {
-			if(data.equals(it.getData())) {
+			if (data.equals(it.getData())) {
 				return true;
 			}
 		}
@@ -143,8 +144,10 @@ public class DLList<T> {
 		if (it.next == null) {
 			setRear(toInsert);
 		} else {
+			it.next.prev = toInsert;
 			toInsert.next = it.next;
 		}
+		toInsert.prev = it;
 		it.next = toInsert;
 		numberOfElems++;
 	}
@@ -159,17 +162,23 @@ public class DLList<T> {
 		}
 	}
 
+	public void deleteLast() {
+		setRear(getRear().prev);
+		numberOfElems--;
+	}
+
 	public void delete_byIndex(int index) {
 		if (index >= 0 && index < numberOfElems) {
 			if (index == 0) {
 				front = front.next;
+				front.prev = null;
 				numberOfElems--;
+			} else if (index == numberOfElems - 1) {
+				deleteLast();
 			} else {
-				Node<T> toDeletePrev = getNode(index - 1);
-				toDeletePrev.next = toDeletePrev.next.next;
-				if (toDeletePrev.next == null) {
-					setRear(toDeletePrev);
-				}
+				Node<T> toDelete = getNode(index);
+				toDelete.next.prev = toDelete.prev;
+				toDelete.prev.next = toDelete.next;
 				numberOfElems--;
 			}
 		}
@@ -180,22 +189,31 @@ public class DLList<T> {
 	}
 
 	public void reverse() {
-		Node<T> nextEntry, head;
-		Node<T> temp = null;
-		if (!isEmpty()) {
-			head = front;
-			while (head.next != null) {
-				nextEntry = head.next;
-				head.next = temp;
-				temp = head;
-				head = nextEntry;
-			}
-			head.next = temp;
-			temp = front;
-			front = getRear();
-			setRear(temp);
+		for (Node<T> it = rear; it != null; it = it.prev) {
+			it.next = it.prev;
+			/*
+			 * Because iteration happens over the it.prev pointer, we cannot
+			 * modify it from within the loop! otherwise it wont terminate. We
+			 * have to do another loop?
+			 */
+		}
+
+		Node<T> tmp = rear;
+		rear = front;
+		front = tmp; // swap end pointers
+		
+		setPrevPointers();
+
+	}
+
+	private void setPrevPointers() {
+		Node<T> tmp = null;
+		for(Node<T> it = front; it != null; it = it.next) {
+			it.prev = tmp;
+			tmp = it;
 		}
 	}
+	// below be dragons! (Anywhere be dragons, really.)
 
 	public DLList<T> clone() {
 		DLList<T> clone = new DLList<T>();
@@ -207,7 +225,7 @@ public class DLList<T> {
 		} else {
 			for (Node<T> it = front; it != null; it = it.next) {
 				clone.append(it.getData());
-				
+
 			}
 			return clone;
 		}
@@ -226,8 +244,7 @@ public class DLList<T> {
 		DLList<T> connedTail = other.clone();
 		if (other.numberOfElems == 0) {
 			return connedInit;
-		}
-		else {
+		} else {
 			connedInit.rear.next = connedTail.front;
 			connedInit.rear = connedTail.rear;
 			connedInit.countElems();
@@ -235,20 +252,20 @@ public class DLList<T> {
 		}
 
 	}
-	
+
 	private void makeRear(Node<T> last) {
-		if(!(last.next == null)) { // do nothing if last is already rear
+		if (!(last.next == null)) { // do nothing if last is already rear
 			last.next = null;
 			this.rear = last;
 			countElems();
 		}
 	}
-	
+
 	public DLList<T> subList(int start, int end) {
-		if(start >= 0 && end > start && end <= numberOfElems) {
+		if (start >= 0 && end > start && end <= numberOfElems) {
 			DLList<T> sublist = this.clone();
-			sublist.makeRear(sublist.getNode(end-1));
-			//System.out.println(sublist.rear);
+			sublist.makeRear(sublist.getNode(end - 1));
+			// System.out.println(sublist.rear);
 			sublist.front = sublist.getNode(start);
 			return sublist;
 		}
