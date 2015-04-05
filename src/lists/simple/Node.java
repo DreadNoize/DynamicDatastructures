@@ -25,13 +25,15 @@ public class Node<T> {
 	public T getData() { return data; }
 
 	public String toString() { return data.toString(); }
-	
+
 	public Node<T> cloneRec(List<T> parent) {
-		System.out.println(this);
-		if (this.next != null)
+		if (this.next != null) {
+			System.out.println(this);
 			return new Node<T>(data, next.cloneRec(parent));
-		else {
-			return new Node<T>(data, new Node<T>(parent.getRear().getData()));
+		} else {
+			System.out.println(this);
+			parent.makeRear(this);
+			return new Node<T>(data, null);
 		}
 	}
 
