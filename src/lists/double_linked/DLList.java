@@ -1,5 +1,7 @@
 package lists.double_linked;
 
+import lists.simple.Node;
+
 /**
  * Created by ra on 01.04.15. Simple generic linked list.
  */
@@ -90,6 +92,25 @@ public class DLList<T> {
 			}
 		}
 		return false;
+	}
+	
+	public int countOccurence(T data) {
+		int counter = 0;
+		for (Node<T> it = front; it != null; it = it.next) {
+			if (data.equals(it.getData())) 
+				counter++;
+		}
+		return counter;
+	}
+	
+	public int[] search (T data) {
+		int currInd = 0;
+		int[] indices = new int[countOccurence(data)];
+		for (int i = 0; i < numberOfElems; i++) {
+			if (getNode(i).getData().equals(data)) 
+				indices[currInd++] = i;
+		}
+		return indices;
 	}
 
 	public Node<T> getNode(int index) {
