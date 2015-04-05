@@ -228,8 +228,8 @@ public class DLList<T> {
 			return clone;
 		}
 	}
-	// below be dragons! (Anywhere be dragons, really.)
 
+	// use with care still.
 	public DLList<T> cloneRec() {
 		DLList<T> clone = new DLList<>();
 		clone.front = front.cloneRec(this);
@@ -244,9 +244,9 @@ public class DLList<T> {
 		if (other.numberOfElems == 0) {
 			return connedInit;
 		} else {
-			connedInit.rear.next = connedTail.front;
-			connedInit.rear = connedTail.rear;
-			connedInit.countElems();
+			connedInit.rear.connect(connedTail.front); // connect(rear) doesn't touch neighbor.next
+			connedInit.rear = connedTail.rear; // it also doesn't touch parentList.rear
+			connedInit.countElems(); // update elem count because init.numberelems + tail.numberelems is cumbersome...
 			return connedInit;
 		}
 
@@ -264,8 +264,8 @@ public class DLList<T> {
 		if (start >= 0 && end > start && end <= numberOfElems) {
 			DLList<T> sublist = this.clone();
 			sublist.makeRear(sublist.getNode(end - 1));
-			// System.out.println(sublist.rear);
 			sublist.front = sublist.getNode(start);
+			sublist.front.prev = null;
 			return sublist;
 		}
 		System.out.println("Invalid slice!");
