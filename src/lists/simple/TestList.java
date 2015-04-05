@@ -6,11 +6,19 @@ package lists.simple;
 
 public class TestList {
 	public static void main(String args[]) {
-		Node<Integer> n1 = new Node<Integer>(1);
-		Node<Integer> n2 = new Node<Integer>(2);
-		Node<Integer> n3 = new Node<Integer>(3);
-		Node<Integer> n4 = new Node<Integer>(4);
-
+		
+		for(int i = 0; i <= 40; i++) {
+			System.out.print("=");
+		}
+		
+		System.out.println("\nSimple linked list");
+		
+		for(int i = 0; i <= 40; i++) {
+			System.out.print("=");
+		}
+		
+		System.out.println();
+		
 		Node<String> s1 = new Node<String>("This");
 		Node<String> s2 = new Node<String>("might");
 		Node<String> s3 = new Node<String>("even");
