@@ -4,6 +4,7 @@ package lists.simple;
  * This simple generic list of type T knows only its front and rear nodes. It
  * can do most basic list operations like app - and prepending, adding and
  * deleting at indices, indexOf, clone and toString.
+ * constructor @params either varargs of values or varargs of nodes.
  */
 
 public class List<T> {
@@ -14,7 +15,6 @@ public class List<T> {
 
 	public List() {
 		front = null;
-		setRear(null);
 	}
 
 	@SafeVarargs
