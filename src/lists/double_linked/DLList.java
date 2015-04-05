@@ -189,9 +189,10 @@ public class DLList<T> {
 		for (Node<T> it = rear; it != null; it = it.prev) {
 			it.next = it.prev;
 			/*
-			 * Because iteration happens over the it.prev pointer, we cannot
-			 * modify it from within the loop! otherwise it wont terminate. We
-			 * have to do another loop?
+			 * Because iteration happens over the it.prev pointer,it cannot be
+			 * modified from within the loop! otherwise it wont terminate.
+			 * 
+			 * Does it have to be another loop?
 			 */
 		}
 
@@ -211,7 +212,6 @@ public class DLList<T> {
 		}
 	}
 
-	// below be dragons! (Anywhere be dragons, really.)
 
 	public DLList<T> clone() {
 		DLList<T> clone = new DLList<T>();
@@ -228,6 +228,7 @@ public class DLList<T> {
 			return clone;
 		}
 	}
+	// below be dragons! (Anywhere be dragons, really.)
 
 	public DLList<T> cloneRec() {
 		DLList<T> clone = new DLList<>();
