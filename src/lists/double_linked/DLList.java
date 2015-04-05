@@ -234,8 +234,7 @@ public class DLList<T> {
 	// use with care still.
 	public DLList<T> cloneRec() {
 		DLList<T> clone = new DLList<>();
-		clone.front = front.cloneRec(this);
-
+		clone.front = front.cloneRec(clone);
 		clone.countElems();
 		return clone;
 	}
@@ -255,11 +254,10 @@ public class DLList<T> {
 	}
 
 	private void makeRear(Node<T> last) {
-		if (!(last.next == null)) { // do nothing if last is already rear
-			last.next = null;
-			this.rear = last;
-			countElems();
-		}
+		last.next = null;
+		this.rear = last;
+		countElems();
+
 	}
 
 	public DLList<T> subList(int start, int end) {
