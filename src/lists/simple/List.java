@@ -17,12 +17,6 @@ public class List<T> {
 		front = null;
 	}
 
-	@SafeVarargs
-	public List(Node<T>... ns) {
-		for (Node<T> node : ns) {
-			append(node.getData());
-		}
-	}
 
 	@SafeVarargs
 	public List(T... vs) {

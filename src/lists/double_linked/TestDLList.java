@@ -7,26 +7,21 @@ package lists.double_linked;
 public class TestDLList {
 	public static void main(String args[]) {
 					
-			for(int i = 0; i <= 40; i++) {
-				System.out.print("=");
-			}
-			
-			System.out.println("\nDouble linked list");
-			
-			for(int i = 0; i <= 40; i++) {
-				System.out.print("=");
-			}
-			
-			System.out.println();
+		for (int i = 0; i <= 40; i++) {
+			System.out.print("=");
+		}
 
-		Node<String> s1 = new Node<String>("This");
-		Node<String> s2 = new Node<String>("might");
-		Node<String> s3 = new Node<String>("even");
-		Node<String> s4 = new Node<String>("work.");
+		System.out.println("\nDouble linked list");
+
+		for (int i = 0; i <= 40; i++) {
+			System.out.print("=");
+		}
+
+		System.out.println();
 
 		DLList<Integer> integers = new DLList<Integer>(1, 2, 3, 4, 5, 6, 7, 8, 9);
 
-		DLList<String> strings = new DLList<String>(s1, s2, s3, s4);
+		DLList<String> strings = new DLList<String>("This", "might", "work", "now!");
 
 		DLList<Boolean> bools = new DLList<Boolean>();
 
