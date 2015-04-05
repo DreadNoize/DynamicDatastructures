@@ -3,32 +3,33 @@ package stacks.arraystack;
 import lists.simple.Node;
 
 public class ArrayStack<T> {
-	private T[] s;
+	private Node<T>[] stack;
 	private int sp;
 	private int size;
 
+	@SuppressWarnings("unchecked")
 	public ArrayStack() {
-		Node<T>[] s = (Node<T>[]) new Node[256];
+		this.stack = (Node<T>[]) new Node[256];
 		size = 0;
 	}
 
 	public void push(T dataValue) {
-		assert size < s.length : "Stack can take no more";
+		assert size < stack.length : "Stack can take no more";
 		sp++;
-		s[sp] = dataValue;
+		stack[sp] = new Node<T> (dataValue);
 		++size;
 	}
 
 	public void pop() {
 		assert size > 0 : "Stack empty";
-		s[sp] = null;
+		stack[sp] = null;
 		--sp;
 		--size;
 	}
 
-	public T peek() {
+	public Node<T> peek() {
 		assert size > 0 : "Stack empty";
-		return s[sp];
+		return stack[sp];
 	}
 
 	public String toString() {
@@ -36,7 +37,7 @@ public class ArrayStack<T> {
 			return "Empty stack!";
 		StringBuilder result = new StringBuilder();
 		for (int i = sp; i >= 0; --i) {
-			result.append(s[i] + " ");
+			result.append(stack[i] + " ");
 		}
 		return result.toString();
 	}
