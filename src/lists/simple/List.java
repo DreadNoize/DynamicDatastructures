@@ -1,10 +1,12 @@
 package lists.simple;
 
+import java.util.Iterator;
+
 /**
  * Created by ra on 01.04.15. Simple generic linked list.
  */
 
-public class List<T> {
+public class List<T> implements Iterable<T>{
 	private int numberOfElems;
 
 	private Node<T> front;
@@ -15,12 +17,14 @@ public class List<T> {
 		setRear(null);
 	}
 
+	@SafeVarargs
 	public List(Node<T>... ns) {
 		for (Node<T> node : ns) {
 			append(node.getData());
 		}
 	} // deprecate?
 
+	@SafeVarargs
 	public List(T... vs) {
 		for (T value : vs) {
 			append(value);
@@ -66,6 +70,19 @@ public class List<T> {
 			result.append(getRear());
 		}
 		return result.toString();
+	}
+	
+	public Node<T>[] toArray() {
+		int currentElems = numberOfElems;
+		countElems();
+		assert currentElems == numberOfElems: "Something went wrong: " + currentElems + numberOfElems;
+		
+		@SuppressWarnings("unchecked")
+		Node<T>[] array = (Node<T>[]) new Node[numberOfElems];
+		for(int index = 0; index < numberOfElems; index++) {
+			array[index] = getNode(index); 
+		}
+		return array;
 	}
 
 	public boolean contains(T data) {
@@ -246,5 +263,9 @@ public class List<T> {
 		System.out.println("Invalid slice!"); // exception
 		return null;
 	}
+
+	@Override
+	public Iterator<T> iterator() {
+		return new ListIterator<T>();	}
 
 }
