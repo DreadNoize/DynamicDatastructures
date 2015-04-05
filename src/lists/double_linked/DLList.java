@@ -1,7 +1,5 @@
 package lists.double_linked;
 
-import lists.simple.Node;
-
 /**
  * Created by ra on 01.04.15. Simple generic linked list.
  */
