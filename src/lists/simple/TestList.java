@@ -21,14 +21,9 @@ public class TestList {
 
 		System.out.println();
 
-		Node<String> s1 = new Node<String>("This");
-		Node<String> s2 = new Node<String>("might");
-		Node<String> s3 = new Node<String>("even");
-		Node<String> s4 = new Node<String>("work.");
-
 		List<Integer> integers = new List<Integer>(1, 2, 3, 4, 5, 6, 7, 8, 9);
 
-		List<String> strings = new List<String>(s1, s2, s3, s4);
+		List<String> strings = new List<String>("Will", "this", "slice", "and", "clone?");
 
 		List<Boolean> bools = new List<Boolean>();
 
