@@ -56,7 +56,6 @@ public class Node<T> {
 			}
 	}
 
-	// still doesn't work.
 	public Node<T> cloneRec(DLList<T> parent) {
 		if (this.next != null) {
 			return new Node<T>(data, this, next.cloneRec(parent));
