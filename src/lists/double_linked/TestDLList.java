@@ -42,7 +42,7 @@ public class TestDLList {
 		bools.delete_byVal(false);
 		System.out.println(bools);
 
-		System.out.println("\n" + "Strings delete index 3, reverse:" + "\n");
+		System.out.println("\n" + "Strings delete index 3 and reverse:" + "\n");
 		System.out.println(strings);
 		strings.delete_byIndex(3);
 		System.out.println(strings);
@@ -50,6 +50,7 @@ public class TestDLList {
 		System.out.println(strings);
 		strings.reverse();
 		System.out.println(strings);
+		System.out.println("Does the empty DLList<String> contain \"This\"? " + new DLList<String>().contains("This"));
 
 		System.out.println("\n" + "Integers addAt 9 10, indexOf 5, getNode 8:"
 				+ "\n");
@@ -64,12 +65,13 @@ public class TestDLList {
 		integerClone.getNode(9).setData(6);
 		System.out.println("integer DLList clone: " + integerClone);
 		System.out.println("Node 5 orig == Node 5 clone: " + (integers.getNode(5) == integerClone.getNode(5)));
+		
+		System.out.println(integers.cloneRec());
 
 		System.out.println("conned integer with its modified clone: " + integers.concat(integerClone));
-		System.out.println("Does the empty DLList<String> contain \"This\"? " + new DLList<String>().contains("This"));
 
 		System.out.println(integerClone);
-		System.out.println(integerClone.subList(0, 7));
+		System.out.println(integerClone.subList(0, 4));
 
 	}
 }

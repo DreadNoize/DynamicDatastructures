@@ -40,14 +40,31 @@ public class Node<T> {
 		}
 		return counter;
 	}
+	
+	public void connect(Node<T> neighbour) {
+		if (neighbour != null)
+			if (next != null) {
+				Node<T> tmp = this.next;
+				this.next = neighbour;
+				neighbour.prev = this;
 
+				neighbour.next = tmp;
+				tmp.prev = neighbour;
+			} else {
+				this.next = neighbour;
+				neighbour.prev = this;
+			}
+	}
 
+	// still doesn't work.
 	public Node<T> cloneRec(DLList<T> parent) {
 		System.out.println(this);
-		if (this.next != null)
+		if (this.next.next == null) {
+			System.out.println("hold thight");
+			Node<T> last = new Node<T>(next.getData(), this, null);
+			return new Node<T>(data, prev, last);
+		} else {
 			return new Node<T>(data, this.prev, next.cloneRec(parent));
-		else {
-			return new Node<T>(data, this.prev, new Node<T>(parent.getRear().getData()));
 		}
 	}
 
