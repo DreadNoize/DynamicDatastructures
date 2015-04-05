@@ -19,14 +19,9 @@ public class TestDLList {
 			
 			System.out.println();
 
-		Node<String> s1 = new Node<String>("This");
-		Node<String> s2 = new Node<String>("might");
-		Node<String> s3 = new Node<String>("even");
-		Node<String> s4 = new Node<String>("work.");
-
 		DLList<Integer> integers = new DLList<Integer>(1, 2, 3, 4, 5, 6, 7, 8, 9);
 
-		DLList<String> strings = new DLList<String>(s1, s2, s3, s4);
+		DLList<String> strings = new DLList<String>("This", "might", "work", "now!");
 
 		DLList<Boolean> bools = new DLList<Boolean>();
 
