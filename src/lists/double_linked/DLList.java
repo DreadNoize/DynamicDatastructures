@@ -45,15 +45,12 @@ public class DLList<T> {
 		return numberOfElems;
 	}
 
-	// TODO: change back to private later! change return type back to void?
-	int countElems() {
+	private void countElems() {
 		int counter = 0;
 		for (Node<T> it = front; it != null; it = it.next) {
 			counter++;
 		}
 		numberOfElems = counter;
-
-		return numberOfElems;
 	}
 
 	public boolean isEmpty() {
@@ -201,18 +198,19 @@ public class DLList<T> {
 		Node<T> tmp = rear;
 		rear = front;
 		front = tmp; // swap end pointers
-		
+
 		setPrevPointers();
 
 	}
 
 	private void setPrevPointers() {
 		Node<T> tmp = null;
-		for(Node<T> it = front; it != null; it = it.next) {
+		for (Node<T> it = front; it != null; it = it.next) {
 			it.prev = tmp;
 			tmp = it;
 		}
 	}
+
 	// below be dragons! (Anywhere be dragons, really.)
 
 	public DLList<T> clone() {
