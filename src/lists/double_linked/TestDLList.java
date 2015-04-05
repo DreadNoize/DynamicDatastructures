@@ -66,12 +66,12 @@ public class TestDLList {
 		System.out.println("integer DLList clone: " + integerClone);
 		System.out.println("Node 5 orig == Node 5 clone: " + (integers.getNode(5) == integerClone.getNode(5)));
 		
-		System.out.println(integers.cloneRec());
 
 		System.out.println("conned integer with its modified clone: " + integers.concat(integerClone));
 
 		System.out.println(integerClone);
 		System.out.println(integerClone.subList(0, 4));
 
+		System.out.println("Recursive clone: " + integers.cloneRec());
 	}
 }
