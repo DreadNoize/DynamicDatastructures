@@ -68,10 +68,19 @@ public class DLList<T> {
 			for (Node<T> it = front; it.next != null; it = it.next) {
 				result.append(it + ", ");
 			}
+			updateRear();
 			result.append(getRear());
 		}
 		return result.toString();
 	}
+	
+	private void updateRear() {
+		for (Node<T> it = front; it != null; it = it.next) {
+			if (it.next == null)
+				makeRear(it);
+		}
+	}
+
 
 	public boolean contains(T data) {
 		if (numberOfElems == 0)
