@@ -45,7 +45,7 @@ public class List<T> implements Iterable<T>{
 		return numberOfElems;
 	}
 
-	private void countElems() {
+	private void countElems() { // TODO assert correct numberofelements
 		int counter = 0;
 		for (Node<T> it = front; it != null; it = it.next) {
 			counter++;
@@ -67,11 +67,19 @@ public class List<T> implements Iterable<T>{
 			for (Node<T> it = front; it.next != null; it = it.next) {
 				result.append(it + ", ");
 			}
+			updateRear();
 			result.append(getRear());
 		}
 		return result.toString();
 	}
 	
+	private void updateRear() {
+		for (Node<T> it = front; it != null; it = it.next) {
+			if (it.next == null)
+				makeRear(it);
+		}
+	}
+
 	public Node<T>[] toArray() {
 		int currentElems = numberOfElems;
 		countElems();
@@ -225,9 +233,9 @@ public class List<T> implements Iterable<T>{
 
 	public List<T> cloneRec() {
 		List<T> clone = new List<>();
-		clone.front = front.cloneRec(this);
+		clone.front = front.cloneRec(clone);
 
-		clone.countElems();
+		clone.numberOfElems = numberOfElems;
 		return clone;
 	}
 
@@ -245,13 +253,12 @@ public class List<T> implements Iterable<T>{
 
 	}
 
-	private void makeRear(Node<T> last) {
-		if (!(last.next == null)) { // do nothing if last is already rear
+	public void makeRear(Node<T> last) {
 			last.next = null;
 			this.rear = last;
 			countElems();
 		}
-	}
+
 
 	public List<T> subList(int start, int end) {
 		if (start >= 0 && end > start && end <= numberOfElems) {
