@@ -1,14 +1,12 @@
 package lists.simple;
 
-import java.util.Iterator;
-
 /**
- * This simple generic list of type T knows only its front and rear nodes.
- * It can do most basic list operations like app- and prepending, adding and deleting at indices, 
- * indexOf, clone and toString.
+ * This simple generic list of type T knows only its front and rear nodes. It
+ * can do most basic list operations like app - and prepending, adding and
+ * deleting at indices, indexOf, clone and toString.
  */
 
-public class List<T> implements Iterable<T> {
+public class List<T> {
 	private int numberOfElems;
 
 	private Node<T> front;
@@ -24,7 +22,7 @@ public class List<T> implements Iterable<T> {
 		for (Node<T> node : ns) {
 			append(node.getData());
 		}
-	} // deprecate?
+	}
 
 	@SafeVarargs
 	public List(T... vs) {
@@ -37,14 +35,14 @@ public class List<T> implements Iterable<T> {
 		return rear;
 	}
 
+	public int getNumberOfElems() {
+		return numberOfElems;
+	}
+
 	private void setRear(Node<T> rear) {
 		this.rear = rear;
 		if (rear != null)
 			rear.next = null;
-	}
-
-	public int getNumberOfElems() {
-		return numberOfElems;
 	}
 
 	private void countElems() { // TODO assert correct numberofelements
@@ -53,25 +51,6 @@ public class List<T> implements Iterable<T> {
 			counter++;
 		}
 		numberOfElems = counter;
-
-	}
-
-	public boolean isEmpty() {
-		return front == null;
-	}
-
-	public String toString() {
-		StringBuilder result = new StringBuilder("elements: " + numberOfElems
-				+ ": ");
-		if (isEmpty()) {
-			result.append("List is empty!");
-		} else {
-			for (Node<T> it = front; it.next != null; it = it.next) {
-				result.append(it + ", ");
-			}
-			result.append(getRear());
-		}
-		return result.toString();
 	}
 
 	private void updateRear() {
@@ -81,77 +60,14 @@ public class List<T> implements Iterable<T> {
 		}
 	}
 
-	public Node<T>[] toArray() {
-		int currentElems = numberOfElems;
+	private void makeRear(Node<T> last) {
+		last.next = null;
+		this.rear = last;
 		countElems();
-		assert currentElems == numberOfElems : "Something went wrong: "
-				+ currentElems + numberOfElems;
-
-		@SuppressWarnings("unchecked")
-		Node<T>[] array = (Node<T>[]) new Node[numberOfElems];
-		for (int index = 0; index < numberOfElems; index++) {
-			array[index] = getNode(index);
-		}
-		return array;
 	}
 
-	public boolean contains(T data) {
-		if (numberOfElems == 0)
-			return false;
-		for (Node<T> it = front; it != null; it = it.next) {
-			if (data.equals(it.getData())) {
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	public int countOccurence(T data) {
-		int counter = 0;
-		for (Node<T> it = front; it != null; it = it.next) {
-			if (data.equals(it.getData())) 
-				counter++;
-		}
-		return counter;
-	}
-	
-	public int[] search (T data) {
-		int currInd = 0;
-		int[] indices = new int[countOccurence(data)];
-		for (int i = 0; i < numberOfElems; i++) {
-			if (getNode(i).getData().equals(data)) 
-				indices[currInd++] = i;
-		}
-		return indices;
-	}
-
-	public Node<T> getNode(int index) {
-		if (index < numberOfElems && index >= 0) {
-			Node<T> it = front;
-			for (int i = 0; it != null && i < index; ++i)
-				it = it.next;
-			return it;
-		} else {
-			System.out.println("Index out of bounds: " + index);
-			return null;
-		}
-	}
-
-	public int indexOf(T data) {
-		int index = 0;
-		for (Node<T> it = front; it != null; it = it.next) {
-			if (it.getData().equals(data)) {
-				break;
-			} else {
-				index++;
-			}
-		}
-		assert index < numberOfElems : data + " not contained in list!";
-		if (index >= numberOfElems) {
-			throw new lists.ElementNotFoundException(data.toString());
-		}
-		return index;
-
+	public boolean isEmpty() {
+		return front == null;
 	}
 
 	public void append(T data) {
@@ -174,6 +90,93 @@ public class List<T> implements Iterable<T> {
 		}
 		front = toPrepend;
 		numberOfElems++;
+	}
+
+	public String toString() {
+		StringBuilder result = new StringBuilder("elements: " + numberOfElems
+				+ ": ");
+		if (isEmpty()) {
+			result.append("List is empty!");
+		} else {
+			for (Node<T> it = front; it.next != null; it = it.next) {
+				result.append(it + ", ");
+			}
+			result.append(getRear());
+		}
+		return result.toString();
+	}
+
+	public Node<T>[] toArray() {
+		int currentElems = numberOfElems;
+		countElems();
+		assert currentElems == numberOfElems : "Something went wrong: "
+				+ currentElems + numberOfElems;
+
+		@SuppressWarnings("unchecked")
+		Node<T>[] array = (Node<T>[]) new Node[numberOfElems];
+		for (int index = 0; index < numberOfElems; index++) {
+			array[index] = getNode(index);
+		}
+		return array;
+	}
+
+	public Node<T> getNode(int index) {
+		if (index < numberOfElems && index >= 0) {
+			Node<T> it = front;
+			for (int i = 0; it != null && i < index; ++i)
+				it = it.next;
+			return it;
+		} else {
+			System.out.println("Index out of bounds: " + index);
+			return null;
+		}
+	}
+
+	public boolean contains(T data) {
+		if (numberOfElems == 0)
+			return false;
+		for (Node<T> it = front; it != null; it = it.next) {
+			if (data.equals(it.getData())) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public int indexOf(T data) {
+		int index = 0;
+		for (Node<T> it = front; it != null; it = it.next) {
+			if (it.getData().equals(data)) {
+				break;
+			} else {
+				index++;
+			}
+		}
+		assert index < numberOfElems : data + " not contained in list!";
+		if (index >= numberOfElems) {
+			throw new lists.ElementNotFoundException(data.toString());
+		}
+		return index;
+
+	}
+
+	public int countOccurence(T data) {
+		int counter = 0;
+		for (Node<T> it = front; it != null; it = it.next) {
+			if (data.equals(it.getData()))
+				counter++;
+		}
+		return counter;
+	}
+
+	public int[] search(T data) {
+		int currInd = 0;
+		int[] indices = new int[countOccurence(data)];
+		for (int i = 0; i < numberOfElems; i++) {
+			if (getNode(i).getData().equals(data))
+				indices[currInd++] = i;
+		}
+		return indices;
 	}
 
 	public void insertAfterNode(Node<T> it, T data) {
@@ -237,6 +240,33 @@ public class List<T> implements Iterable<T> {
 		}
 	}
 
+	public List<T> concat(List<T> other) {
+		List<T> connedInit = this.clone();
+		List<T> connedTail = other.clone();
+		if (other.numberOfElems == 0) {
+			return connedInit;
+		} else {
+			connedInit.rear.next = connedTail.front;
+			connedInit.rear = connedTail.rear;
+			connedInit.countElems();
+			return connedInit;
+		}
+	}
+
+	public T head() { return this.front.getData(); }
+
+	public List<T> tail() { return subList(1, numberOfElems); }
+
+	public List<T> subList(int start, int end) {
+		if (start >= 0 && end > start && end <= numberOfElems) {
+			List<T> sublist = this.clone();
+			sublist.makeRear(sublist.getNode(end - 1));
+			sublist.front = sublist.getNode(start);
+			return sublist;
+		}
+		throw new lists.InvalidSliceException(numberOfElems + ", " + start + ", " + end);
+	}
+
 	public List<T> clone() {
 		List<T> clone = new List<T>();
 		if (numberOfElems <= 0) {
@@ -259,42 +289,6 @@ public class List<T> implements Iterable<T> {
 		clone.updateRear();
 		clone.numberOfElems = numberOfElems;
 		return clone;
-	}
-
-	public List<T> concat(List<T> other) {
-		List<T> connedInit = this.clone();
-		List<T> connedTail = other.clone();
-		if (other.numberOfElems == 0) {
-			return connedInit;
-		} else {
-			connedInit.rear.next = connedTail.front;
-			connedInit.rear = connedTail.rear;
-			connedInit.countElems();
-			return connedInit;
-		}
-
-	}
-
-	public void makeRear(Node<T> last) {
-		last.next = null;
-		this.rear = last;
-		countElems();
-	}
-
-	public List<T> subList(int start, int end) {
-		if (start >= 0 && end > start && end <= numberOfElems) {
-			List<T> sublist = this.clone();
-			sublist.makeRear(sublist.getNode(end - 1));
-			sublist.front = sublist.getNode(start);
-			return sublist;
-		}
-		System.out.println("Invalid slice!"); // exception
-		return null;
-	}
-
-	@Override
-	public Iterator<T> iterator() {
-		return new ListIterator<T>();
 	}
 
 }
