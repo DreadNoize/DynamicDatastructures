@@ -19,12 +19,14 @@ public class DLList<T> {
 		return front;
 	}
 
+	@SafeVarargs
 	public DLList(Node<T>... ns) {
 		for (Node<T> node : ns) {
 			append(node.getData());
 		}
 	} // deprecate?
 
+	@SafeVarargs
 	public DLList(T... vs) {
 		for (T value : vs) {
 			append(value);
