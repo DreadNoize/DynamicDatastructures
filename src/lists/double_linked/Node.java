@@ -40,7 +40,7 @@ public class Node<T> {
 		}
 		return counter;
 	}
-	
+
 	public void connect(Node<T> neighbour) {
 		if (neighbour != null)
 			if (next != null) {
@@ -58,13 +58,10 @@ public class Node<T> {
 
 	// still doesn't work.
 	public Node<T> cloneRec(DLList<T> parent) {
-		System.out.println(this);
-		if (this.next.next == null) {
-			System.out.println("hold thight");
-			Node<T> last = new Node<T>(next.getData(), this, null);
-			return new Node<T>(data, prev, last);
+		if (this.next != null) {
+			return new Node<T>(data, this, next.cloneRec(parent));
 		} else {
-			return new Node<T>(data, this.prev, next.cloneRec(parent));
+			return new Node<T>(data, this, null);
 		}
 	}
 
