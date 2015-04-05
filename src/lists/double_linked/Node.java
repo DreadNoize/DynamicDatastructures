@@ -11,8 +11,8 @@ public class Node<T> {
 
 	public Node(T data) {
 		this.data = data;
-		this.next = null;
 		this.prev = null;
+		this.next = null;
 	}
 
 	public Node(T data, Node<T> prev, Node<T> next) {
@@ -21,23 +21,18 @@ public class Node<T> {
 		this.next = next;
 	}
 
-	public void setData(T data) {
-		this.data = data;
+	public void setData(T data) { this.data = data;	}
 
-	}
-
-	public void setNext(Node<T> next) {
-		this.next = next;
-	}
+	public void setNext(Node<T> next) { this.next = next; }
 	
-	public void setPrev(Node<T> prev) {
-		this.prev = prev;
+	public void setPrev(Node<T> prev) { this.prev = prev; }
+
+	public T getData() { return data; }
+	
+	public String toString() {
+		return data.toString();
 	}
 
-	public T getData() {
-		return data;
-	}
-	
 	public int index() {
 		int counter = 0;
 		for(Node<T> it = this; it != null; it = it.prev) {
@@ -46,16 +41,13 @@ public class Node<T> {
 		return counter;
 	}
 
-	public String toString() {
-		return data.toString();
-	}
 
 	public Node<T> cloneRec(DLList<T> parent) {
 		System.out.println(this);
 		if (this.next != null)
-			return new Node<T>(data, this, next.cloneRec(parent));
+			return new Node<T>(data, this.prev, next.cloneRec(parent));
 		else {
-			return new Node<T>(data, this, new Node<T>(parent.getRear().getData()));
+			return new Node<T>(data, this.prev, new Node<T>(parent.getRear().getData()));
 		}
 	}
 
