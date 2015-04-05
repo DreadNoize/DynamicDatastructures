@@ -68,7 +68,6 @@ public class DLList<T> {
 			for (Node<T> it = front; it.next != null; it = it.next) {
 				result.append(it + ", ");
 			}
-			updateRear();
 			result.append(getRear());
 		}
 		return result.toString();
@@ -115,10 +114,10 @@ public class DLList<T> {
 			}
 		}
 		assert index < numberOfElems : data + " not contained in list!";
-		return index < numberOfElems ? index : -1; // very ugly if used to
-													// Haskell 'Maybe a'. Throw
-													// exception?
-
+		if (index >= numberOfElems) {
+			throw new lists.ElementNotFoundException(data.toString());
+		}
+		return index;
 	}
 
 	public void append(T data) {
@@ -240,10 +239,10 @@ public class DLList<T> {
 		}
 	}
 
-	// use with care still.
 	public DLList<T> cloneRec() {
 		DLList<T> clone = new DLList<>();
 		clone.front = front.cloneRec(clone);
+		clone.updateRear();
 		clone.countElems();
 		return clone;
 	}
