@@ -236,7 +236,6 @@ public class List<T> implements Iterable<T> {
 	public List<T> cloneRec() {
 		List<T> clone = new List<>();
 		clone.front = front.cloneRec(clone);
-
 		clone.numberOfElems = numberOfElems;
 		return clone;
 	}

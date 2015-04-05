@@ -28,10 +28,8 @@ public class Node<T> {
 
 	public Node<T> cloneRec(List<T> parent) {
 		if (this.next != null) {
-			System.out.println(this);
 			return new Node<T>(data, next.cloneRec(parent));
 		} else {
-			System.out.println(this);
 			return new Node<T>(data, null);
 		}
 	}
