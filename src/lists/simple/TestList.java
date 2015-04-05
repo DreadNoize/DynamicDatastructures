@@ -6,19 +6,19 @@ package lists.simple;
 
 public class TestList {
 	public static void main(String args[]) {
-		
-		for(int i = 0; i <= 40; i++) {
+
+		for (int i = 0; i <= 40; i++) {
 			System.out.print("=");
 		}
-		
+
 		System.out.println("\nSimple linked list");
-		
-		for(int i = 0; i <= 40; i++) {
+
+		for (int i = 0; i <= 40; i++) {
 			System.out.print("=");
 		}
-		
+
 		System.out.println();
-		
+
 		Node<String> s1 = new Node<String>("This");
 		Node<String> s2 = new Node<String>("might");
 		Node<String> s3 = new Node<String>("even");
@@ -61,13 +61,22 @@ public class TestList {
 		List<Integer> integerClone = integers.clone();
 		integerClone.getNode(9).setData(6);
 		System.out.println("integer list clone: " + integerClone);
-		System.out.println("Node 5 orig == Node 5 clone: " + (integers.getNode(5) == integerClone.getNode(5)));
+		System.out.println("Node 5 orig == Node 5 clone: "
+				+ (integers.getNode(5) == integerClone.getNode(5)));
 
-		System.out.println("conned integer with its modified clone: " + integers.concat(integerClone));
-		System.out.println("Does the empty List<String> contain \"This\"? " + new List<String>().contains("This"));
+		System.out.println("conned integer with its modified clone: "
+				+ integers.concat(integerClone));
+		System.out.println("Does the empty List<String> contain \"This\"? "
+				+ new List<String>().contains("This"));
 
 		System.out.println(integerClone);
 		System.out.println(integerClone.subList(0, 7));
 
+		List<Integer> ints = integers.cloneRec();
+		System.out.println(ints);
+		System.out.println(ints.getNode(9));
+
+		System.out.println(strings.indexOf("mig6ht"));
 	}
+
 }

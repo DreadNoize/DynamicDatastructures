@@ -6,7 +6,7 @@ import java.util.Iterator;
  * Created by ra on 01.04.15. Simple generic linked list.
  */
 
-public class List<T> implements Iterable<T>{
+public class List<T> implements Iterable<T> {
 	private int numberOfElems;
 
 	private Node<T> front;
@@ -72,7 +72,7 @@ public class List<T> implements Iterable<T>{
 		}
 		return result.toString();
 	}
-	
+
 	private void updateRear() {
 		for (Node<T> it = front; it != null; it = it.next) {
 			if (it.next == null)
@@ -83,12 +83,13 @@ public class List<T> implements Iterable<T>{
 	public Node<T>[] toArray() {
 		int currentElems = numberOfElems;
 		countElems();
-		assert currentElems == numberOfElems: "Something went wrong: " + currentElems + numberOfElems;
-		
+		assert currentElems == numberOfElems : "Something went wrong: "
+				+ currentElems + numberOfElems;
+
 		@SuppressWarnings("unchecked")
 		Node<T>[] array = (Node<T>[]) new Node[numberOfElems];
-		for(int index = 0; index < numberOfElems; index++) {
-			array[index] = getNode(index); 
+		for (int index = 0; index < numberOfElems; index++) {
+			array[index] = getNode(index);
 		}
 		return array;
 	}
@@ -126,9 +127,10 @@ public class List<T> implements Iterable<T>{
 			}
 		}
 		assert index < numberOfElems : data + " not contained in list!";
-		return index < numberOfElems ? index : -1; // very ugly if used to
-													// Haskell 'Maybe a'. Throw
-													// exception?
+		if (index >= numberOfElems) {
+			throw new ElementNotFoundException(data.toString());
+		}
+		return index;
 
 	}
 
@@ -254,11 +256,10 @@ public class List<T> implements Iterable<T>{
 	}
 
 	public void makeRear(Node<T> last) {
-			last.next = null;
-			this.rear = last;
-			countElems();
-		}
-
+		last.next = null;
+		this.rear = last;
+		countElems();
+	}
 
 	public List<T> subList(int start, int end) {
 		if (start >= 0 && end > start && end <= numberOfElems) {
@@ -273,6 +274,7 @@ public class List<T> implements Iterable<T>{
 
 	@Override
 	public Iterator<T> iterator() {
-		return new ListIterator<T>();	}
+		return new ListIterator<T>();
+	}
 
 }

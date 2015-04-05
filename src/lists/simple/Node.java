@@ -32,7 +32,6 @@ public class Node<T> {
 			return new Node<T>(data, next.cloneRec(parent));
 		} else {
 			System.out.println(this);
-			parent.makeRear(this);
 			return new Node<T>(data, null);
 		}
 	}
