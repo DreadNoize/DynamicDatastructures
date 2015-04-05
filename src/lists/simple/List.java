@@ -67,7 +67,6 @@ public class List<T> implements Iterable<T> {
 			for (Node<T> it = front; it.next != null; it = it.next) {
 				result.append(it + ", ");
 			}
-			updateRear();
 			result.append(getRear());
 		}
 		return result.toString();
@@ -128,7 +127,7 @@ public class List<T> implements Iterable<T> {
 		}
 		assert index < numberOfElems : data + " not contained in list!";
 		if (index >= numberOfElems) {
-			throw new ElementNotFoundException(data.toString());
+			throw new lists.ElementNotFoundException(data.toString());
 		}
 		return index;
 
@@ -236,6 +235,7 @@ public class List<T> implements Iterable<T> {
 	public List<T> cloneRec() {
 		List<T> clone = new List<>();
 		clone.front = front.cloneRec(clone);
+		clone.updateRear();
 		clone.numberOfElems = numberOfElems;
 		return clone;
 	}
