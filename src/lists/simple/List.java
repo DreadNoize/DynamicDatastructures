@@ -1,7 +1,5 @@
 package lists.simple;
 
-import lists.SizeMismatchException;
-
 /**
  * This simple generic list of type T knows only its front and rear nodes. It
  * can do most basic list operations like app - and prepending, adding and
@@ -27,12 +25,16 @@ public class List<T> {
 	}
 
 	private void setRear(Node<T> rear) {
-		
-		if (rear != null)
-			this.rear.next = rear; 
+		if (this.rear != null) {
+			if (rear != null)
+				this.rear.next = rear;
 			this.rear = rear;
 			rear.next = null;
-		countElems();
+			countElems();
+		} else {
+			updateRear();
+			setRear(rear);
+		}
 	}
 	
 	public int getSize() {
@@ -52,7 +54,8 @@ public class List<T> {
 	private void updateRear() {
 		for (Node<T> it = front; it != null; it = it.next) {
 			if (it.next == null)
-				setRear(it);
+				this.rear = it;
+			
 		}
 		countElems();
 	}
