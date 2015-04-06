@@ -10,7 +10,6 @@ public class Node<T> {
 
 	public Node(T data) {
 		this.data = data;
-		this.next = null;
 	}
 
 	public Node(T data, Node<T> next) {
@@ -27,9 +26,9 @@ public class Node<T> {
 	@Override
 	public String toString() { return data.toString(); }
 
-	public Node<T> cloneRec(List<T> parent) {
+	public Node<T> cloneRec() {
 		if (this.next != null) {
-			return new Node<T>(data, next.cloneRec(parent));
+			return new Node<T>(data, next.cloneRec());
 		} else {
 			return new Node<T>(data, null);
 		}

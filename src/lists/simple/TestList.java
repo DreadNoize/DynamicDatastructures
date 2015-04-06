@@ -75,7 +75,7 @@ public class TestList {
 		System.out.println(ints);
 		System.out.println(ints.getNode(9));
 
-		System.out.println(strings.indexOf("might"));
+		System.out.println(strings.indexOf("slice"));
 	}
 
 }

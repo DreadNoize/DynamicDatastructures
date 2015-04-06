@@ -34,7 +34,7 @@ public class List<T> {
 		return numberOfElems;
 	}
 
-	private void countElems() { // TODO assert correct numberofelements
+	private void countElems() {
 		int counter = 0;
 		for (Node<T> it = front; it != null; it = it.next) {
 			counter++;
@@ -272,7 +272,7 @@ public class List<T> {
 
 	public List<T> cloneRec() {
 		List<T> clone = new List<>();
-		clone.front = front.cloneRec(clone);
+		clone.front = front.cloneRec();
 		clone.updateRear();
 		clone.numberOfElems = numberOfElems;
 		return clone;

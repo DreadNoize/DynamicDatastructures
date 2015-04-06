@@ -286,7 +286,7 @@ public class DLList<T> {
 
 	public DLList<T> cloneRec() {
 		DLList<T> clone = new DLList<>();
-		clone.front = front.cloneRec(clone);
+		clone.front = front.cloneRec();
 		clone.updateRear();
 		clone.countElems();
 		return clone;

@@ -11,8 +11,6 @@ public class Node<T> {
 
 	public Node(T data) {
 		this.data = data;
-		this.prev = null;
-		this.next = null;
 	}
 
 	public Node(T data, Node<T> prev, Node<T> next) {
@@ -57,9 +55,9 @@ public class Node<T> {
 			}
 	}
 
-	public Node<T> cloneRec(DLList<T> parent) {
+	public Node<T> cloneRec() {
 		if (this.next != null) {
-			return new Node<T>(data, this, next.cloneRec(parent));
+			return new Node<T>(data, this, next.cloneRec());
 		} else {
 			return new Node<T>(data, this, null);
 		}
