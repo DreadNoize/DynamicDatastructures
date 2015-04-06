@@ -31,7 +31,7 @@ public class DLList<T> {
 		countElems();
 	}
 
-	public int getNumberOfElems() {
+	public int getSize() {
 		return size;
 	}
 
