@@ -93,8 +93,9 @@ public class DLList<T> {
 	public Node<T>[] toArray() {
 		int currentElems = size;
 		countElems();
-		assert currentElems == size : "Something went wrong: "
-				+ currentElems + size;
+		if (currentElems != size) {
+			throw new lists.SizeMismatchException("While trying to create array");
+		}
 
 		@SuppressWarnings("unchecked")
 		Node<T>[] array = (Node<T>[]) new Node[size];

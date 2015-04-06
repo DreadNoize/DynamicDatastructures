@@ -82,8 +82,9 @@ public class PolymorphicList {
 	public Node[] toArray() {
 		int currentElems = size;
 		countElems();
-		assert currentElems == size : "Something went wrong: "
-				+ currentElems + size;
+		if (currentElems != size) {
+			throw new lists.SizeMismatchException("While trying to create array");
+		}
 
 		Node[] array = new Node[size];
 		for (int index = 0; index < size; index++) {
