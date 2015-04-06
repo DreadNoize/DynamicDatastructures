@@ -180,7 +180,7 @@ public class List<T> {
 		if (index == 0) {
 			prepend(data);
 		} else {
-			Node<T> it = getNode(index - 1);
+			Node<T> it = getNode(index - 1); // exceptions around here!
 			if (it != null)
 				insertAfterNode(it, data);
 		}
@@ -202,11 +202,8 @@ public class List<T> {
 		}
 	}
 
-	public void delete_byVal(T data) {
-		delete_byIndex(indexOf(data));
-	}
+	public void delete_byVal(T data) { delete_byIndex(indexOf(data)); }
 
-	//something shaky here
 	public void reverse() {
 		Node<T> nextEntry, head;
 		Node<T> temp = null;
@@ -262,7 +259,6 @@ public class List<T> {
 		} else {
 			for (Node<T> it = front; it != null; it = it.next) {
 				clone.append(it.getData());
-
 			}
 			return clone;
 		}

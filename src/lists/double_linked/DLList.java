@@ -1,7 +1,5 @@
 package lists.double_linked;
 
-import lists.SizeMismatchException;
-
 /**
  * This double linked generic list of type T knows only its front and rear
  * nodes. It can do most basic list operations like app - and prepending, adding
@@ -237,6 +235,7 @@ public class DLList<T> {
 			tmp = it;
 		}
 	}
+
 	public DLList<T> concat(DLList<T> other) {
 		DLList<T> connedInit = this.clone();
 		DLList<T> connedTail = other.clone();
@@ -278,7 +277,6 @@ public class DLList<T> {
 		} else {
 			for (Node<T> it = front; it != null; it = it.next) {
 				clone.append(it.getData());
-
 			}
 			return clone;
 		}
