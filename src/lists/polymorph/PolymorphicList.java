@@ -1,5 +1,7 @@
 package lists.polymorph;
 
+import lists.IndexOutUfBoundsException;
+
 /**
  * This double linked {@link PolymorphicList} list only knows its front and rear
  * nodes. The nodes can contain elements of any complex type. It can do most
@@ -107,9 +109,8 @@ public class PolymorphicList {
 			for (int i = 0; it != null && i < index; ++i)
 				it = it.next;
 			return it;
-		} else {//TODO add exception
-			System.out.println("Index out of bounds: " + index);
-			return null;
+		} else {
+			throw new IndexOutUfBoundsException("Couldn't get Node at " + index);
 		}
 	}
 	public boolean contains(Object data) {

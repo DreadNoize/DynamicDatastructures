@@ -1,5 +1,7 @@
 package lists.simple;
 
+import lists.IndexOutUfBoundsException;
+
 /**
  * This simple generic list of type T knows only its front and rear nodes. It
  * can do most basic list operations like app - and prepending, adding and
@@ -110,8 +112,7 @@ public class List<T> {
 				it = it.next;
 			return it;
 		} else {
-			System.out.println("Index out of bounds: " + index);
-			return null;
+			throw new IndexOutUfBoundsException("Couldn't get Node at " + index);
 		}
 	}
 

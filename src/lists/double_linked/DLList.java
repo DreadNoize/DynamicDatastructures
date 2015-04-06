@@ -1,5 +1,7 @@
 package lists.double_linked;
 
+import lists.IndexOutUfBoundsException;
+
 /**
  * This double linked generic list of type T knows only its front and rear
  * nodes. It can do most basic list operations like app - and prepending, adding
@@ -112,8 +114,7 @@ public class DLList<T> {
 				it = it.next;
 			return it;
 		} else {
-			System.out.println("Index out of bounds: " + index);
-			return null;
+			throw new IndexOutUfBoundsException("Couldn't get Node at " + index);
 		}
 	}
 	public boolean contains(T data) {
