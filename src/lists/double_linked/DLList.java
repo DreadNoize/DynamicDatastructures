@@ -1,7 +1,10 @@
 package lists.double_linked;
 
 /**
- * Created by ra on 01.04.15. Simple generic linked list.
+ * This double linked generic list of type T knows only its front and rear
+ * nodes. It can do most basic list operations like app - and prepending, adding
+ * and deleting at indices, indexOf, clone and toString. constructor @params can
+ * be varargs of values.
  */
 
 public class DLList<T> {
@@ -9,15 +12,6 @@ public class DLList<T> {
 
 	private Node<T> front;
 	private Node<T> rear;
-
-	public DLList() {
-		front = null;
-		setRear(null);
-	}
-
-	public Node<T> getFront() {
-		return front;
-	}
 
 	@SafeVarargs
 	public DLList(T... vs) {
@@ -48,8 +42,43 @@ public class DLList<T> {
 		numberOfElems = counter;
 	}
 
-	public boolean isEmpty() {
-		return front == null;
+	private void updateRear() {
+		for (Node<T> it = front; it != null; it = it.next) {
+			if (it.next == null)
+				makeRear(it);
+		}
+	}
+
+	private void makeRear(Node<T> last) {
+		last.next = null;
+		this.rear = last;
+		countElems();
+	}
+
+	public boolean isEmpty() { return front == null; }
+
+	public void append(T data) {
+		Node<T> toAppend = new Node<T>(data);
+		if (isEmpty()) {
+			front = toAppend;
+			setRear(toAppend);
+		} else {
+			toAppend.setPrev(getRear());
+			getRear().setNext(toAppend);
+			setRear(toAppend);
+		}
+		numberOfElems++;
+	}
+	
+	public void prepend(T data) {
+		Node<T> toPrepend = new Node<T>(data);
+		toPrepend.next = front;
+		if (toPrepend.next == null) {
+			setRear(toPrepend);
+		}
+		front.setPrev(toPrepend);
+		front = toPrepend;
+		numberOfElems++;
 	}
 
 	public String toString() {
@@ -66,42 +95,18 @@ public class DLList<T> {
 		return result.toString();
 	}
 	
-	private void updateRear() {
-		for (Node<T> it = front; it != null; it = it.next) {
-			if (it.next == null)
-				makeRear(it);
-		}
-	}
+	public Node<T>[] toArray() {
+		int currentElems = numberOfElems;
+		countElems();
+		assert currentElems == numberOfElems : "Something went wrong: "
+				+ currentElems + numberOfElems;
 
-
-	public boolean contains(T data) {
-		if (numberOfElems == 0)
-			return false;
-		for (Node<T> it = front; it != null; it = it.next) {
-			if (data.equals(it.getData())) {
-				return true;
-			}
+		@SuppressWarnings("unchecked")
+		Node<T>[] array = (Node<T>[]) new Node[numberOfElems];
+		for (int index = 0; index < numberOfElems; index++) {
+			array[index] = getNode(index);
 		}
-		return false;
-	}
-	
-	public int countOccurence(T data) {
-		int counter = 0;
-		for (Node<T> it = front; it != null; it = it.next) {
-			if (data.equals(it.getData())) 
-				counter++;
-		}
-		return counter;
-	}
-	
-	public int[] search (T data) {
-		int currInd = 0;
-		int[] indices = new int[countOccurence(data)];
-		for (int i = 0; i < numberOfElems; i++) {
-			if (getNode(i).getData().equals(data)) 
-				indices[currInd++] = i;
-		}
-		return indices;
+		return array;
 	}
 
 	public Node<T> getNode(int index) {
@@ -114,6 +119,16 @@ public class DLList<T> {
 			System.out.println("Index out of bounds: " + index);
 			return null;
 		}
+	}
+	public boolean contains(T data) {
+		if (numberOfElems == 0)
+			return false;
+		for (Node<T> it = front; it != null; it = it.next) {
+			if (data.equals(it.getData())) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public int indexOf(T data) {
@@ -132,28 +147,22 @@ public class DLList<T> {
 		return index;
 	}
 
-	public void append(T data) {
-		Node<T> toAppend = new Node<T>(data);
-		if (isEmpty()) {
-			front = toAppend;
-			setRear(toAppend);
-		} else {
-			toAppend.setPrev(getRear());
-			getRear().setNext(toAppend);
-			setRear(toAppend);
+	public int countOccurence(T data) {
+		int counter = 0;
+		for (Node<T> it = front; it != null; it = it.next) {
+			if (data.equals(it.getData()))
+				counter++;
 		}
-		numberOfElems++;
+		return counter;
 	}
-
-	public void prepend(T data) {
-		Node<T> toPrepend = new Node<T>(data);
-		toPrepend.next = front;
-		if (toPrepend.next == null) {
-			setRear(toPrepend);
+	public int[] search(T data) {
+		int currInd = 0;
+		int[] indices = new int[countOccurence(data)];
+		for (int i = 0; i < numberOfElems; i++) {
+			if (getNode(i).getData().equals(data))
+				indices[currInd++] = i;
 		}
-		front.setPrev(toPrepend);
-		front = toPrepend;
-		numberOfElems++;
+		return indices;
 	}
 
 	public void insertAfterNode(Node<T> it, T data) {
@@ -181,11 +190,6 @@ public class DLList<T> {
 		}
 	}
 
-	public void deleteLast() {
-		setRear(getRear().prev);
-		numberOfElems--;
-	}
-
 	public void delete_byIndex(int index) {
 		if (index >= 0 && index < numberOfElems) {
 			if (index == 0) {
@@ -202,10 +206,13 @@ public class DLList<T> {
 			}
 		}
 	}
-
-	public void delete_byVal(T data) {
-		delete_byIndex(indexOf(data));
+	
+	public void deleteLast() {
+		setRear(getRear().prev);
+		numberOfElems--;
 	}
+
+	public void delete_byVal(T data) { delete_byIndex(indexOf(data)); }
 
 	public void reverse() {
 		for (Node<T> it = rear; it != null; it = it.prev) {
@@ -217,13 +224,10 @@ public class DLList<T> {
 			 * Does it have to be another loop?
 			 */
 		}
-
 		Node<T> tmp = rear;
 		rear = front;
 		front = tmp; // swap end pointers
-
 		setPrevPointers();
-
 	}
 
 	private void setPrevPointers() {
@@ -233,8 +237,37 @@ public class DLList<T> {
 			tmp = it;
 		}
 	}
+	public DLList<T> concat(DLList<T> other) {
+		DLList<T> connedInit = this.clone();
+		DLList<T> connedTail = other.clone();
+		if (other.numberOfElems == 0) {
+			return connedInit;
+		} else {
+			// connect(rear) doesn't touch neighbor.next
+			connedInit.rear.connect(connedTail.front);
+			// it also doesn't touch parentList.rear
+			connedInit.rear = connedTail.rear;
+			connedInit.countElems(); 
+			return connedInit;
+		}
+	}
+	
+	public DLList<T> subList(int start, int end) {
+		if (start >= 0 && end > start && end <= numberOfElems) {
+			DLList<T> sublist = this.clone();
+			sublist.makeRear(sublist.getNode(end - 1));
+			sublist.front = sublist.getNode(start);
+			sublist.front.prev = null;
+			return sublist;
+		}
+		System.out.println("Invalid slice!");
+		return null;
+	}
+	
+	public T head() { return this.front.getData(); }
 
-
+	public DLList<T> tail() { return subList(1, numberOfElems); }
+	
 	public DLList<T> clone() {
 		DLList<T> clone = new DLList<T>();
 		if (numberOfElems <= 0) {
@@ -258,38 +291,4 @@ public class DLList<T> {
 		clone.countElems();
 		return clone;
 	}
-
-	public DLList<T> concat(DLList<T> other) {
-		DLList<T> connedInit = this.clone();
-		DLList<T> connedTail = other.clone();
-		if (other.numberOfElems == 0) {
-			return connedInit;
-		} else {
-			connedInit.rear.connect(connedTail.front); // connect(rear) doesn't touch neighbor.next
-			connedInit.rear = connedTail.rear; // it also doesn't touch parentList.rear
-			connedInit.countElems(); // update elem count because init.numberelems + tail.numberelems is cumbersome...
-			return connedInit;
-		}
-
-	}
-
-	private void makeRear(Node<T> last) {
-		last.next = null;
-		this.rear = last;
-		countElems();
-
-	}
-
-	public DLList<T> subList(int start, int end) {
-		if (start >= 0 && end > start && end <= numberOfElems) {
-			DLList<T> sublist = this.clone();
-			sublist.makeRear(sublist.getNode(end - 1));
-			sublist.front = sublist.getNode(start);
-			sublist.front.prev = null;
-			return sublist;
-		}
-		System.out.println("Invalid slice!");
-		return null;
-	}
-
 }

@@ -3,20 +3,15 @@ package lists.simple;
 /**
  * This simple generic list of type T knows only its front and rear nodes. It
  * can do most basic list operations like app - and prepending, adding and
- * deleting at indices, indexOf, clone and toString.
- * constructor @params either varargs of values or varargs of nodes.
- */
+ * deleting at indices, indexOf, clone and toString. 
+ * constructor @params can be varargs of values.
+ * */
 
 public class List<T> {
 	private int numberOfElems;
 
 	private Node<T> front;
 	private Node<T> rear;
-
-	public List() {
-		front = null;
-	}
-
 
 	@SafeVarargs
 	public List(T... vs) {
@@ -29,14 +24,14 @@ public class List<T> {
 		return rear;
 	}
 
-	public int getNumberOfElems() {
-		return numberOfElems;
-	}
-
 	private void setRear(Node<T> rear) {
 		this.rear = rear;
 		if (rear != null)
 			rear.next = null;
+	}
+	
+	public int getNumberOfElems() {
+		return numberOfElems;
 	}
 
 	private void countElems() { // TODO assert correct numberofelements
@@ -60,9 +55,7 @@ public class List<T> {
 		countElems();
 	}
 
-	public boolean isEmpty() {
-		return front == null;
-	}
+	public boolean isEmpty() { return front == null; }
 
 	public void append(T data) {
 		Node<T> toAppend = new Node<T>(data);
