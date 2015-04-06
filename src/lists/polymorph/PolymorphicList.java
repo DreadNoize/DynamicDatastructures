@@ -19,6 +19,7 @@ public class PolymorphicList {
 		this.rear = rear;
 		if (rear != null)
 			rear.next = null;
+		countElems();
 	}
 
 	public int size() { return size; }
@@ -84,8 +85,7 @@ public class PolymorphicList {
 		assert currentElems == size : "Something went wrong: "
 				+ currentElems + size;
 
-		@SuppressWarnings("unchecked")
-		Node[] array = (Node[]) new Node[size];
+		Node[] array = new Node[size];
 		for (int index = 0; index < size; index++) {
 			array[index] = getNode(index);
 		}
@@ -98,7 +98,7 @@ public class PolymorphicList {
 			for (int i = 0; it != null && i < index; ++i)
 				it = it.next;
 			return it;
-		} else {
+		} else {//TODO add exception
 			System.out.println("Index out of bounds: " + index);
 			return null;
 		}
@@ -123,7 +123,6 @@ public class PolymorphicList {
 				index++;
 			}
 		}
-		assert index < size : data + " not contained in list!";
 		if (index >= size) {
 			throw new lists.ElementNotFoundException(data.toString());
 		}
