@@ -135,7 +135,6 @@ public class DLList<T> {
 				index++;
 			}
 		}
-		assert index < size : data + " not contained in list!";
 		if (index >= size) {
 			throw new lists.ElementNotFoundException(data.toString());
 		}

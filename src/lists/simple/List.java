@@ -92,7 +92,7 @@ public class List<T> {
 		int currentElems = size;
 		countElems();
 		assert currentElems == size : "Something went wrong: "
-				+ currentElems + size;
+				+ currentElems + size; //TODO throw exception
 
 		@SuppressWarnings("unchecked")
 		Node<T>[] array = (Node<T>[]) new Node[size];
@@ -134,7 +134,6 @@ public class List<T> {
 				index++;
 			}
 		}
-		assert index < size : data + " not contained in list!";
 		if (index >= size) {
 			throw new lists.ElementNotFoundException(data.toString());
 		}
@@ -162,7 +161,7 @@ public class List<T> {
 	}
 
 	public void insertAfterNode(Node<T> it, T data) {
-		assert it != null : "cannot insert after null!";
+		assert it != null : "cannot insert after null!"; // TODO throw exception
 		Node<T> toInsert = new Node<T>(data);
 
 		if (it.next == null) {
