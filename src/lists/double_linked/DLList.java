@@ -63,7 +63,6 @@ public class DLList<T> {
 			getRear().setNext(toAppend);
 			setRear(toAppend);
 		}
-		size++;
 	}
 	
 	public void prepend(T data) {

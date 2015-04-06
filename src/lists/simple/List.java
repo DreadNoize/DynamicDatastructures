@@ -172,7 +172,6 @@ public class List<T> {
 			toInsert.next = it.next;
 		}
 		it.next = toInsert;
-		size++;
 	}
 
 	public void addAtIndex(int index, T data) {

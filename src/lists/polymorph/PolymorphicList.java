@@ -60,7 +60,6 @@ public class PolymorphicList {
 			getRear().setNext(toAppend);
 			setRear(toAppend);
 		}
-		size++;
 	}
 
 	public void prepend(Object data) {
