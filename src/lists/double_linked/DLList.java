@@ -22,16 +22,21 @@ public class DLList<T> {
 		}
 	}
 
-	public Node<T> getRear() {
-		return rear;
-	}
+	public Node<T> getRear() { return rear; }
 
 	private void setRear(Node<T> rear) {
-		this.rear = rear;
-		if (rear != null)
+		if (this.rear != null) {
+			if (rear != null)
+				this.rear.next = rear;
+			this.rear = rear;
 			rear.next = null;
-		countElems();
+			countElems();
+		} else {
+			updateRear();
+			setRear(rear);
+		}
 	}
+
 
 	public int getSize() {
 		return size;

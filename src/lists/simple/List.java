@@ -20,9 +20,7 @@ public class List<T> {
 		}
 	}
 
-	public Node<T> getRear() {
-		return rear;
-	}
+	public Node<T> getRear() { return rear; }
 
 	private void setRear(Node<T> rear) {
 		if (this.rear != null) {
