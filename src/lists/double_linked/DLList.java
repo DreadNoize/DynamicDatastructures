@@ -65,7 +65,7 @@ public class DLList<T> {
 		if (isEmpty()) {
 			front = toAppend;
 			size++;
-			setRear(toAppend);
+			rear = toAppend;
 		} else {
 			toAppend.setPrev(getRear());
 			getRear().setNext(toAppend);
@@ -120,6 +120,7 @@ public class DLList<T> {
 			throw new lists.IndexOutUfBoundsException("Couldn't get Node at " + index);
 		}
 	}
+
 	public boolean contains(T data) {
 		if (size == 0)
 			return false;
@@ -169,7 +170,7 @@ public class DLList<T> {
 			throw new lists.InsertAfterNullException();
 		Node<T> toInsert = new Node<T>(data);
 
-		if (it.next == null) {
+		if (it.next == null) { // inserted is last
 			setRear(toInsert);
 		} else {
 			it.next.prev = toInsert;
@@ -209,7 +210,6 @@ public class DLList<T> {
 	
 	public void deleteLast() {
 		setRear(getRear().prev);
-		size--;
 	}
 
 	public void delete_byVal(T data) { delete_byIndex(indexOf(data)); }
