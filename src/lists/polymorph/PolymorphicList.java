@@ -1,7 +1,5 @@
 package lists.polymorph;
 
-import lists.IndexOutUfBoundsException;
-
 /**
  * This double linked {@link PolymorphicList} list only knows its front and rear
  * nodes. The nodes can contain elements of any complex type. It can do most
@@ -110,7 +108,7 @@ public class PolymorphicList {
 				it = it.next;
 			return it;
 		} else {
-			throw new IndexOutUfBoundsException("Couldn't get Node at " + index);
+			throw new lists.IndexOutUfBoundsException("Couldn't get Node at " + index);
 		}
 	}
 	public boolean contains(Object data) {
@@ -158,7 +156,8 @@ public class PolymorphicList {
 	}
 
 	public void insertAfterNode(Node it, Object data) {
-		assert it != null : "cannot insert after null!";
+		if (it == null)
+			throw new lists.InsertAfterNullException();
 		Node toInsert = new Node(data);
 
 		if (it.next == null) {

@@ -1,7 +1,5 @@
 package lists.simple;
 
-import lists.IndexOutUfBoundsException;
-
 /**
  * This simple generic list of type T knows only its front and rear nodes. It
  * can do most basic list operations like app - and prepending, adding and
@@ -112,7 +110,7 @@ public class List<T> {
 				it = it.next;
 			return it;
 		} else {
-			throw new IndexOutUfBoundsException("Couldn't get Node at " + index);
+			throw new lists.IndexOutUfBoundsException("Couldn't get Node at " + index);
 		}
 	}
 
@@ -163,7 +161,8 @@ public class List<T> {
 	}
 
 	public void insertAfterNode(Node<T> it, T data) {
-		assert it != null : "cannot insert after null!"; // TODO throw exception
+		if (it == null)
+			throw new lists.InsertAfterNullException();
 		Node<T> toInsert = new Node<T>(data);
 
 		if (it.next == null) {
