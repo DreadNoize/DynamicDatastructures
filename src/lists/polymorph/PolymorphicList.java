@@ -45,6 +45,7 @@ public class PolymorphicList {
 			if (it.next == null)
 				setRear(it);
 		}
+		countElems();
 	}
 
 	public boolean isEmpty() { return front == null; }
@@ -61,7 +62,7 @@ public class PolymorphicList {
 		}
 		size++;
 	}
-	
+
 	public void prepend(Object data) {
 		Node toPrepend = new Node(data);
 		toPrepend.next = front;

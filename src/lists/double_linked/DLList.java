@@ -48,6 +48,7 @@ public class DLList<T> {
 			if (it.next == null)
 				setRear(it);
 		}
+		countElems();
 	}
 
 	public boolean isEmpty() { return front == null; }
