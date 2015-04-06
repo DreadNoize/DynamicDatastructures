@@ -28,6 +28,7 @@ public class DLList<T> {
 		this.rear = rear;
 		if (rear != null)
 			rear.next = null;
+		countElems();
 	}
 
 	public int getNumberOfElems() {
@@ -45,14 +46,8 @@ public class DLList<T> {
 	private void updateRear() {
 		for (Node<T> it = front; it != null; it = it.next) {
 			if (it.next == null)
-				makeRear(it);
+				setRear(it);
 		}
-	}
-
-	private void makeRear(Node<T> last) {
-		last.next = null;
-		this.rear = last;
-		countElems();
 	}
 
 	public boolean isEmpty() { return front == null; }
@@ -255,7 +250,7 @@ public class DLList<T> {
 	public DLList<T> subList(int start, int end) {
 		if (start >= 0 && end > start && end <= numberOfElems) {
 			DLList<T> sublist = this.clone();
-			sublist.makeRear(sublist.getNode(end - 1));
+			sublist.setRear(sublist.getNode(end - 1));
 			sublist.front = sublist.getNode(start);
 			sublist.front.prev = null;
 			return sublist;
