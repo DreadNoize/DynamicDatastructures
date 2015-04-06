@@ -3,8 +3,8 @@ package lists.double_linked;
 /**
  * This double linked generic list of type T knows only its front and rear
  * nodes. It can do most basic list operations like app - and prepending, adding
- * and deleting at indices, indexOf, clone and toString. constructor @params can
- * be varargs of values.
+ * and deleting at indices, indexOf, clone and toString.
+ * Constructor @params can be varargs of values.
  */
 
 public class DLList<T> {

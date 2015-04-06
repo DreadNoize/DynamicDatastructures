@@ -1,5 +1,13 @@
 package lists.polymorph;
 
+/**
+ * This double linked {@link PolymorphicList} list only knows its front and rear
+ * nodes. The nodes can contain elements of any complex type. It can do most
+ * basic list operations like app - and prepending, adding and deleting at
+ * indices, indexOf, clone and toString.
+ * Constructor @params can be varargs of values.
+ * */
+
 public class PolymorphicList {
 	private int size;
 
