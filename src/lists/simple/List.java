@@ -8,7 +8,7 @@ package lists.simple;
  * */
 
 public class List<T> {
-	private int numberOfElems;
+	private int size;
 
 	private Node<T> front;
 	private Node<T> rear;
@@ -31,8 +31,8 @@ public class List<T> {
 		countElems();
 	}
 	
-	public int getNumberOfElems() {
-		return numberOfElems;
+	public int getSize() {
+		return size;
 	}
 
 	private void countElems() {
@@ -40,7 +40,7 @@ public class List<T> {
 		for (Node<T> it = front; it != null; it = it.next) {
 			counter++;
 		}
-		numberOfElems = counter;
+		size = counter;
 	}
 
 	private void updateRear() {
@@ -61,7 +61,7 @@ public class List<T> {
 			getRear().setNext(toAppend);
 			setRear(toAppend);
 		}
-		numberOfElems++;
+		size++;
 	}
 
 	public void prepend(T data) {
@@ -71,11 +71,11 @@ public class List<T> {
 			setRear(toPrepend);
 		}
 		front = toPrepend;
-		numberOfElems++;
+		size++;
 	}
 
 	public String toString() {
-		StringBuilder result = new StringBuilder("elements: " + numberOfElems
+		StringBuilder result = new StringBuilder("elements: " + size
 				+ ": ");
 		if (isEmpty()) {
 			result.append("List is empty!");
@@ -89,21 +89,21 @@ public class List<T> {
 	}
 
 	public Node<T>[] toArray() {
-		int currentElems = numberOfElems;
+		int currentElems = size;
 		countElems();
-		assert currentElems == numberOfElems : "Something went wrong: "
-				+ currentElems + numberOfElems;
+		assert currentElems == size : "Something went wrong: "
+				+ currentElems + size;
 
 		@SuppressWarnings("unchecked")
-		Node<T>[] array = (Node<T>[]) new Node[numberOfElems];
-		for (int index = 0; index < numberOfElems; index++) {
+		Node<T>[] array = (Node<T>[]) new Node[size];
+		for (int index = 0; index < size; index++) {
 			array[index] = getNode(index);
 		}
 		return array;
 	}
 
 	public Node<T> getNode(int index) {
-		if (index < numberOfElems && index >= 0) {
+		if (index < size && index >= 0) {
 			Node<T> it = front;
 			for (int i = 0; it != null && i < index; ++i)
 				it = it.next;
@@ -115,7 +115,7 @@ public class List<T> {
 	}
 
 	public boolean contains(T data) {
-		if (numberOfElems == 0)
+		if (size == 0)
 			return false;
 		for (Node<T> it = front; it != null; it = it.next) {
 			if (data.equals(it.getData())) {
@@ -134,8 +134,8 @@ public class List<T> {
 				index++;
 			}
 		}
-		assert index < numberOfElems : data + " not contained in list!";
-		if (index >= numberOfElems) {
+		assert index < size : data + " not contained in list!";
+		if (index >= size) {
 			throw new lists.ElementNotFoundException(data.toString());
 		}
 		return index;
@@ -154,7 +154,7 @@ public class List<T> {
 	public int[] search(T data) {
 		int currInd = 0;
 		int[] indices = new int[countOccurence(data)];
-		for (int i = 0; i < numberOfElems; i++) {
+		for (int i = 0; i < size; i++) {
 			if (getNode(i).getData().equals(data))
 				indices[currInd++] = i;
 		}
@@ -171,7 +171,7 @@ public class List<T> {
 			toInsert.next = it.next;
 		}
 		it.next = toInsert;
-		numberOfElems++;
+		size++;
 	}
 
 	public void addAtIndex(int index, T data) {
@@ -185,17 +185,17 @@ public class List<T> {
 	}
 
 	public void delete_byIndex(int index) {
-		if (index >= 0 && index < numberOfElems) {
+		if (index >= 0 && index < size) {
 			if (index == 0) {
 				front = front.next;
-				numberOfElems--;
+				size--;
 			} else {
 				Node<T> toDeletePrev = getNode(index - 1);
 				toDeletePrev.next = toDeletePrev.next.next;
 				if (toDeletePrev.next == null) {
 					setRear(toDeletePrev);
 				}
-				numberOfElems--;
+				size--;
 			}
 		}
 	}
@@ -225,7 +225,7 @@ public class List<T> {
 	public List<T> concat(List<T> other) {
 		List<T> connedInit = this.clone();
 		List<T> connedTail = other.clone();
-		if (other.numberOfElems == 0) {
+		if (other.size == 0) {
 			return connedInit;
 		} else {
 			connedInit.rear.next = connedTail.front;
@@ -237,23 +237,23 @@ public class List<T> {
 
 	public T head() { return this.front.getData(); }
 
-	public List<T> tail() { return subList(1, numberOfElems); }
+	public List<T> tail() { return subList(1, size); }
 
 	public List<T> subList(int start, int end) {
-		if (start >= 0 && end > start && end <= numberOfElems) {
+		if (start >= 0 && end > start && end <= size) {
 			List<T> sublist = this.clone();
 			sublist.setRear(sublist.getNode(end - 1));
 			sublist.front = sublist.getNode(start);
 			return sublist;
 		}
-		throw new lists.InvalidSliceException(numberOfElems + ", " + start + ", " + end);
+		throw new lists.InvalidSliceException(size + ", " + start + ", " + end);
 	}
 
 	public List<T> clone() {
 		List<T> clone = new List<T>();
-		if (numberOfElems <= 0) {
+		if (size <= 0) {
 			return clone;
-		} else if (numberOfElems == 1) {
+		} else if (size == 1) {
 			clone.append(front.getData());
 			return clone;
 		} else {
@@ -269,7 +269,7 @@ public class List<T> {
 		List<T> clone = new List<>();
 		clone.front = front.cloneRec();
 		clone.updateRear();
-		clone.numberOfElems = numberOfElems;
+		clone.size = size;
 		return clone;
 	}
 

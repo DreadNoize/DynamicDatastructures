@@ -8,7 +8,7 @@ package lists.double_linked;
  */
 
 public class DLList<T> {
-	private int numberOfElems;
+	private int size;
 
 	private Node<T> front;
 	private Node<T> rear;
@@ -32,7 +32,7 @@ public class DLList<T> {
 	}
 
 	public int getNumberOfElems() {
-		return numberOfElems;
+		return size;
 	}
 
 	private void countElems() {
@@ -40,7 +40,7 @@ public class DLList<T> {
 		for (Node<T> it = front; it != null; it = it.next) {
 			counter++;
 		}
-		numberOfElems = counter;
+		size = counter;
 	}
 
 	private void updateRear() {
@@ -62,7 +62,7 @@ public class DLList<T> {
 			getRear().setNext(toAppend);
 			setRear(toAppend);
 		}
-		numberOfElems++;
+		size++;
 	}
 	
 	public void prepend(T data) {
@@ -73,11 +73,11 @@ public class DLList<T> {
 		}
 		front.setPrev(toPrepend);
 		front = toPrepend;
-		numberOfElems++;
+		size++;
 	}
 
 	public String toString() {
-		StringBuilder result = new StringBuilder("elements: " + numberOfElems
+		StringBuilder result = new StringBuilder("elements: " + size
 				+ ": ");
 		if (isEmpty()) {
 			result.append("List is empty!");
@@ -91,21 +91,21 @@ public class DLList<T> {
 	}
 	
 	public Node<T>[] toArray() {
-		int currentElems = numberOfElems;
+		int currentElems = size;
 		countElems();
-		assert currentElems == numberOfElems : "Something went wrong: "
-				+ currentElems + numberOfElems;
+		assert currentElems == size : "Something went wrong: "
+				+ currentElems + size;
 
 		@SuppressWarnings("unchecked")
-		Node<T>[] array = (Node<T>[]) new Node[numberOfElems];
-		for (int index = 0; index < numberOfElems; index++) {
+		Node<T>[] array = (Node<T>[]) new Node[size];
+		for (int index = 0; index < size; index++) {
 			array[index] = getNode(index);
 		}
 		return array;
 	}
 
 	public Node<T> getNode(int index) {
-		if (index < numberOfElems && index >= 0) {
+		if (index < size && index >= 0) {
 			Node<T> it = front;
 			for (int i = 0; it != null && i < index; ++i)
 				it = it.next;
@@ -116,7 +116,7 @@ public class DLList<T> {
 		}
 	}
 	public boolean contains(T data) {
-		if (numberOfElems == 0)
+		if (size == 0)
 			return false;
 		for (Node<T> it = front; it != null; it = it.next) {
 			if (data.equals(it.getData())) {
@@ -135,8 +135,8 @@ public class DLList<T> {
 				index++;
 			}
 		}
-		assert index < numberOfElems : data + " not contained in list!";
-		if (index >= numberOfElems) {
+		assert index < size : data + " not contained in list!";
+		if (index >= size) {
 			throw new lists.ElementNotFoundException(data.toString());
 		}
 		return index;
@@ -153,7 +153,7 @@ public class DLList<T> {
 	public int[] search(T data) {
 		int currInd = 0;
 		int[] indices = new int[countOccurence(data)];
-		for (int i = 0; i < numberOfElems; i++) {
+		for (int i = 0; i < size; i++) {
 			if (getNode(i).getData().equals(data))
 				indices[currInd++] = i;
 		}
@@ -172,7 +172,7 @@ public class DLList<T> {
 		}
 		toInsert.prev = it;
 		it.next = toInsert;
-		numberOfElems++;
+		size++;
 	}
 
 	public void addAtIndex(int index, T data) {
@@ -186,25 +186,25 @@ public class DLList<T> {
 	}
 
 	public void delete_byIndex(int index) {
-		if (index >= 0 && index < numberOfElems) {
+		if (index >= 0 && index < size) {
 			if (index == 0) {
 				front = front.next;
 				front.prev = null;
-				numberOfElems--;
-			} else if (index == numberOfElems - 1) {
+				size--;
+			} else if (index == size - 1) {
 				deleteLast();
 			} else {
 				Node<T> toDelete = getNode(index);
 				toDelete.next.prev = toDelete.prev;
 				toDelete.prev.next = toDelete.next;
-				numberOfElems--;
+				size--;
 			}
 		}
 	}
 	
 	public void deleteLast() {
 		setRear(getRear().prev);
-		numberOfElems--;
+		size--;
 	}
 
 	public void delete_byVal(T data) { delete_byIndex(indexOf(data)); }
@@ -235,7 +235,7 @@ public class DLList<T> {
 	public DLList<T> concat(DLList<T> other) {
 		DLList<T> connedInit = this.clone();
 		DLList<T> connedTail = other.clone();
-		if (other.numberOfElems == 0) {
+		if (other.size == 0) {
 			return connedInit;
 		} else {
 			// connect(rear) doesn't touch neighbor.next
@@ -248,7 +248,7 @@ public class DLList<T> {
 	}
 	
 	public DLList<T> subList(int start, int end) {
-		if (start >= 0 && end > start && end <= numberOfElems) {
+		if (start >= 0 && end > start && end <= size) {
 			DLList<T> sublist = this.clone();
 			sublist.setRear(sublist.getNode(end - 1));
 			sublist.front = sublist.getNode(start);
@@ -261,13 +261,13 @@ public class DLList<T> {
 	
 	public T head() { return this.front.getData(); }
 
-	public DLList<T> tail() { return subList(1, numberOfElems); }
+	public DLList<T> tail() { return subList(1, size); }
 	
 	public DLList<T> clone() {
 		DLList<T> clone = new DLList<T>();
-		if (numberOfElems <= 0) {
+		if (size <= 0) {
 			return clone;
-		} else if (numberOfElems == 1) {
+		} else if (size == 1) {
 			clone.append(front.getData());
 			return clone;
 		} else {
