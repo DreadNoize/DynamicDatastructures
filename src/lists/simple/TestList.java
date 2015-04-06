@@ -22,6 +22,7 @@ public class TestList {
 		System.out.println();
 
 		List<Integer> integers = new List<Integer>(1, 2, 3, 4, 5, 6, 7, 8, 9);
+		System.out.println(integers);
 
 		List<String> strings = new List<String>("Will", "this", "slice", "and", "clone?");
 
@@ -43,11 +44,12 @@ public class TestList {
 		System.out.println(strings);
 		strings.delete_byIndex(3);
 		System.out.println(strings);
-		strings.reverse();
+		//strings.reverse();
 		System.out.println(strings);
 
 		System.out.println("\n" + "Integers addAt 9 10, indexOf 5, getNode 8:"
 				+ "\n");
+		System.out.println(integers);
 		integers.addAtIndex(9, 10);
 		System.out.println(integers);
 		System.out.println(integers.indexOf(5));

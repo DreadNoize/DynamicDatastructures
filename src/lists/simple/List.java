@@ -27,8 +27,10 @@ public class List<T> {
 	}
 
 	private void setRear(Node<T> rear) {
-		this.rear = rear;
+		
 		if (rear != null)
+			this.rear.next = rear; 
+			this.rear = rear;
 			rear.next = null;
 		countElems();
 	}
@@ -43,7 +45,7 @@ public class List<T> {
 			counter++;
 		}
 		if(size != counter)
-			throw new SizeMismatchException("size: " + size + "actual size: " + counter + " ");
+			System.out.println("size: " + size + " actual size: " + counter + " ");
 		size = counter;
 	}
 
@@ -62,7 +64,7 @@ public class List<T> {
 		if (isEmpty()) {
 			front = toAppend;
 			size++;
-			setRear(toAppend);
+			rear = toAppend;
 		} else {
 			getRear().setNext(toAppend);
 			size++;
@@ -167,7 +169,7 @@ public class List<T> {
 			throw new lists.InsertAfterNullException();
 		Node<T> toInsert = new Node<T>(data);
 
-		if (it.next == null) {
+		if (it.next == null) { // inserted is last
 			setRear(toInsert);
 		} else {
 			toInsert.next = it.next;
@@ -194,10 +196,10 @@ public class List<T> {
 			} else {
 				Node<T> toDeletePrev = getNode(index - 1);
 				toDeletePrev.next = toDeletePrev.next.next;
+				size--;
 				if (toDeletePrev.next == null) {
 					setRear(toDeletePrev);
 				}
-				size--;
 			}
 		}
 	}
@@ -206,6 +208,7 @@ public class List<T> {
 		delete_byIndex(indexOf(data));
 	}
 
+	//something shaky here
 	public void reverse() {
 		Node<T> nextEntry, head;
 		Node<T> temp = null;
