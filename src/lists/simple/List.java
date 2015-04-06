@@ -35,25 +35,22 @@ public class List<T> {
 		}
 	}
 	
-	public int getSize() {
-		return size;
-	}
+	public int getSize() { return size;	}
 
 	private void countElems() {
 		int counter = 0;
 		for (Node<T> it = front; it != null; it = it.next) {
 			counter++;
 		}
-		if(size != counter)
-			System.out.println("size: " + size + " actual size: " + counter + " ");
+		if(size != counter) //this is usually intended!
+			//System.out.println("size: " + size + " actual size: " + counter + " ");
 		size = counter;
 	}
 
 	private void updateRear() {
 		for (Node<T> it = front; it != null; it = it.next) {
 			if (it.next == null)
-				this.rear = it;
-			
+				this.rear = it;	
 		}
 		countElems();
 	}
