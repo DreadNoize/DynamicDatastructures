@@ -1,5 +1,7 @@
 package lists.double_linked;
 
+import lists.SizeMismatchException;
+
 /**
  * This double linked generic list of type T knows only its front and rear
  * nodes. It can do most basic list operations like app - and prepending, adding
@@ -40,6 +42,8 @@ public class DLList<T> {
 		for (Node<T> it = front; it != null; it = it.next) {
 			counter++;
 		}
+		if (size != counter)
+			throw new SizeMismatchException("size: " + size + "actual size: " + counter + " ");
 		size = counter;
 	}
 
@@ -57,10 +61,12 @@ public class DLList<T> {
 		Node<T> toAppend = new Node<T>(data);
 		if (isEmpty()) {
 			front = toAppend;
+			size++;
 			setRear(toAppend);
 		} else {
 			toAppend.setPrev(getRear());
 			getRear().setNext(toAppend);
+			size++;
 			setRear(toAppend);
 		}
 	}
@@ -91,11 +97,7 @@ public class DLList<T> {
 	}
 	
 	public Node<T>[] toArray() {
-		int currentElems = size;
 		countElems();
-		if (currentElems != size) {
-			throw new lists.SizeMismatchException("While trying to create array");
-		}
 
 		@SuppressWarnings("unchecked")
 		Node<T>[] array = (Node<T>[]) new Node[size];
@@ -169,10 +171,10 @@ public class DLList<T> {
 		} else {
 			it.next.prev = toInsert;
 			toInsert.next = it.next;
+			size++;
 		}
 		toInsert.prev = it;
 		it.next = toInsert;
-		size++;
 	}
 
 	public void addAtIndex(int index, T data) {

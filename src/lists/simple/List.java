@@ -1,5 +1,7 @@
 package lists.simple;
 
+import lists.SizeMismatchException;
+
 /**
  * This simple generic list of type T knows only its front and rear nodes. It
  * can do most basic list operations like app - and prepending, adding and
@@ -40,6 +42,8 @@ public class List<T> {
 		for (Node<T> it = front; it != null; it = it.next) {
 			counter++;
 		}
+		if(size != counter)
+			throw new SizeMismatchException("size: " + size + "actual size: " + counter + " ");
 		size = counter;
 	}
 
@@ -57,12 +61,13 @@ public class List<T> {
 		Node<T> toAppend = new Node<T>(data);
 		if (isEmpty()) {
 			front = toAppend;
+			size++;
 			setRear(toAppend);
 		} else {
 			getRear().setNext(toAppend);
+			size++;
 			setRear(toAppend);
 		}
-		size++;
 	}
 
 	public void prepend(T data) {
@@ -90,12 +95,8 @@ public class List<T> {
 	}
 
 	public Node<T>[] toArray() {
-		int currentElems = size;
 		countElems();
-		if (currentElems != size) {
-			throw new lists.SizeMismatchException("While trying to create array");
-		}
-
+		
 		@SuppressWarnings("unchecked")
 		Node<T>[] array = (Node<T>[]) new Node[size];
 		for (int index = 0; index < size; index++) {
@@ -170,6 +171,7 @@ public class List<T> {
 			setRear(toInsert);
 		} else {
 			toInsert.next = it.next;
+			size++;
 		}
 		it.next = toInsert;
 	}

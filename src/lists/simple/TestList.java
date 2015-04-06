@@ -65,7 +65,7 @@ public class TestList {
 				+ integers.concat(integerClone));
 		System.out.println("Does the empty List<String> contain \"This\"? "
 				+ new List<String>().contains("This"));
-		
+		System.out.println(integers);
 		System.out.println(Arrays.toString(integers.toArray()));
 
 		System.out.println(integerClone);

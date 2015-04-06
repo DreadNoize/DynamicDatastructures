@@ -9,7 +9,7 @@ public class SizeMismatchException extends RuntimeException {
 	}
 
 	public SizeMismatchException (String message) {
-		super(": Size was set incorrectly!" + message);
+		super("Size was set incorrectly! " + message);
 	}
 
 }

@@ -1,5 +1,7 @@
 package lists.polymorph;
 
+import lists.SizeMismatchException;
+
 /**
  * This double linked {@link PolymorphicList} list only knows its front and rear
  * nodes. The nodes can contain elements of any complex type. It can do most
@@ -30,13 +32,15 @@ public class PolymorphicList {
 		countElems();
 	}
 
-	public int size() { return size; }
+	public int getSize() { return size; }
 
 	private void countElems() {
 		int counter = 0;
 		for (Node it = front; it != null; it = it.next) {
 			counter++;
 		}
+		if (size != counter)
+			throw new SizeMismatchException("size: " + size + "actual size: " + counter + " ");
 		size = counter;
 	}
 
@@ -54,10 +58,12 @@ public class PolymorphicList {
 		Node toAppend = new Node(data);
 		if (isEmpty()) {
 			front = toAppend;
+			size++;
 			setRear(toAppend);
 		} else {
 			toAppend.setPrev(getRear());
 			getRear().setNext(toAppend);
+			size++; // setRear calls countElems!
 			setRear(toAppend);
 		}
 	}
@@ -88,11 +94,7 @@ public class PolymorphicList {
 	}
 	
 	public Node[] toArray() {
-		int currentElems = size;
 		countElems();
-		if (currentElems != size) {
-			throw new lists.SizeMismatchException("While trying to create array");
-		}
 
 		Node[] array = new Node[size];
 		for (int index = 0; index < size; index++) {
@@ -165,10 +167,10 @@ public class PolymorphicList {
 		} else {
 			it.next.prev = toInsert;
 			toInsert.next = it.next;
+			size++;
 		}
 		toInsert.prev = it;
 		it.next = toInsert;
-		size++;
 	}
 
 	public void addAtIndex(int index, Object data) {
