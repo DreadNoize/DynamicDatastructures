@@ -118,9 +118,10 @@ public class PolymorphicList {
 				it = it.next;
 			return it;
 		} else {
-			throw new lists.IndexOutUfBoundsException("Couldn't get Node at " + index);
+			throw new lists.IndexOutOfBoundsException("Couldn't get Node at " + index);
 		}
 	}
+
 	public boolean contains(Object data) {
 		if (size == 0)
 			return false;
@@ -155,6 +156,7 @@ public class PolymorphicList {
 		}
 		return counter;
 	}
+
 	public int[] search(Object data) {
 		int currInd = 0;
 		int[] indices = new int[countOccurence(data)];
@@ -170,7 +172,7 @@ public class PolymorphicList {
 			throw new lists.InsertAfterNullException();
 		Node toInsert = new Node(data);
 
-		if (it.next == null) {
+		if (it.next == null) { // inserted is last
 			setRear(toInsert);
 		} else {
 			it.next.prev = toInsert;
