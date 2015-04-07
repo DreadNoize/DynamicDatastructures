@@ -1,7 +1,5 @@
 package lists.simple;
 
-import lists.double_linked.Node;
-
 /**
  * This simple generic list of type T knows only its front and rear nodes. It
  * can do most basic list operations like app - and prepending, adding and
@@ -79,7 +77,6 @@ public class List<T> {
 		    rear = toPrepend;
 		} else {
 			toPrepend.setNext(front);
-		    front.setPrev(toPrepend);
 		    front = toPrepend;
 		    
 		}
@@ -118,7 +115,7 @@ public class List<T> {
 				it = it.next;
 			return it;
 		} else {
-			throw new lists.IndexOutUfBoundsException("Couldn't get Node at " + index);
+			throw new lists.IndexOutOfBoundsException("Couldn't get Node at " + index);
 		}
 	}
 
@@ -146,7 +143,6 @@ public class List<T> {
 			throw new lists.ElementNotFoundException(data.toString());
 		}
 		return index;
-
 	}
 
 	public int countOccurence(T data) {
@@ -186,7 +182,9 @@ public class List<T> {
 		if (index == 0) {
 			prepend(data);
 		} else {
-			Node<T> it = getNode(index - 1); // exceptions around here!
+			if ((index - 1) > size)
+				throw new lists.IndexOutOfBoundsException((index - 1) + " is larger than size: " + size);
+			Node<T> it = getNode(index - 1);
 			if (it != null)
 				insertAfterNode(it, data);
 		}
