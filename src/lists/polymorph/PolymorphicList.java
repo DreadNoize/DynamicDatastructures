@@ -1,7 +1,5 @@
 package lists.polymorph;
 
-import lists.SizeMismatchException;
-
 /**
  * This double linked {@link PolymorphicList} list only knows its front and rear
  * nodes. The nodes can contain elements of any complex type. It can do most
@@ -26,11 +24,18 @@ public class PolymorphicList {
 	public Node getRear() { return rear; }
 
 	private void setRear(Node rear) {
-		this.rear = rear;
-		if (rear != null)
+		if (this.rear != null) {
+			if (rear != null)
+				this.rear.next = rear;
+			this.rear = rear;
 			rear.next = null;
-		countElems();
+			countElems();
+		} else {
+			updateRear();
+			setRear(rear);
+		}
 	}
+
 
 	public int getSize() { return size; }
 
@@ -39,8 +44,8 @@ public class PolymorphicList {
 		for (Node it = front; it != null; it = it.next) {
 			counter++;
 		}
-		if (size != counter)
-			throw new SizeMismatchException("size: " + size + "actual size: " + counter + " ");
+		if (size != counter) //this is usually intended!
+			//System.out.println("size: " + size + "actual size: " + counter + " ");
 		size = counter;
 	}
 
@@ -59,26 +64,29 @@ public class PolymorphicList {
 		if (isEmpty()) {
 			front = toAppend;
 			size++;
-			setRear(toAppend);
-		} else {
+			rear = toAppend;
+			} else {
 			toAppend.setPrev(getRear());
 			getRear().setNext(toAppend);
-			size++; // setRear calls countElems!
+			size++;
 			setRear(toAppend);
 		}
 	}
 
 	public void prepend(Object data) {
 		Node toPrepend = new Node(data);
-		toPrepend.next = front;
-		if (toPrepend.next == null) {
-			setRear(toPrepend);
+		if (isEmpty()) {
+		    front = toPrepend;
+		    rear = toPrepend;
+		} else {
+			toPrepend.setNext(front);
+		    front.setPrev(toPrepend);
+		    front = toPrepend;
+		    
 		}
-		front.setPrev(toPrepend);
-		front = toPrepend;
 		size++;
 	}
-
+	
 	public String toString() {
 		StringBuilder result = new StringBuilder("elements: " + size
 				+ ": ");

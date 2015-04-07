@@ -76,12 +76,15 @@ public class DLList<T> implements Iterable<T> {
 	
 	public void prepend(T data) {
 		Node<T> toPrepend = new Node<T>(data);
-		toPrepend.next = front;
-		if (toPrepend.next == null) {
-			setRear(toPrepend);
+		if (isEmpty()) {
+		    front = toPrepend;
+		    rear = toPrepend;
+		} else {
+			toPrepend.setNext(front);
+		    front.setPrev(toPrepend);
+		    front = toPrepend;
+		    
 		}
-		front.setPrev(toPrepend);
-		front = toPrepend;
 		size++;
 	}
 

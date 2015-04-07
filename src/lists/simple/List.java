@@ -1,5 +1,7 @@
 package lists.simple;
 
+import lists.double_linked.Node;
+
 /**
  * This simple generic list of type T knows only its front and rear nodes. It
  * can do most basic list operations like app - and prepending, adding and
@@ -72,14 +74,18 @@ public class List<T> {
 
 	public void prepend(T data) {
 		Node<T> toPrepend = new Node<T>(data);
-		toPrepend.next = front;
-		if (toPrepend.next == null) {
-			setRear(toPrepend);
+		if (isEmpty()) {
+		    front = toPrepend;
+		    rear = toPrepend;
+		} else {
+			toPrepend.setNext(front);
+		    front.setPrev(toPrepend);
+		    front = toPrepend;
+		    
 		}
-		front = toPrepend;
 		size++;
 	}
-
+	
 	public String toString() {
 		StringBuilder result = new StringBuilder("elements: " + size
 				+ ": ");

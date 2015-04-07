@@ -6,7 +6,7 @@ package lists.double_linked;
 
 public class TestDLList {
 	public static void main(String args[]) {
-					
+
 		for (int i = 0; i <= 40; i++) {
 			System.out.print("=");
 		}
@@ -62,8 +62,6 @@ public class TestDLList {
 		integerClone.getNode(9).setData(6);
 		System.out.println("integer DLList clone: " + integerClone);
 		System.out.println("Node 5 orig == Node 5 clone: " + (integers.getNode(5) == integerClone.getNode(5)));
-		
-
 		System.out.println("conned integer with its modified clone: " + integers.concat(integerClone));
 
 		System.out.println(integerClone);
