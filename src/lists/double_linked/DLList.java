@@ -1,6 +1,7 @@
 package lists.double_linked;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /**
  * This double linked generic list of type T knows only its front and rear
@@ -310,9 +311,10 @@ public class DLList<T> implements Iterable<T> {
 
 	class DLLIterator implements Iterator<T> {
 		Node<T> current = null;
+
 		@Override
 		public boolean hasNext() {
-			if(current == null){
+			if (current == null) {
 				return front != null;
 			}
 			return current.next != null;
@@ -320,9 +322,13 @@ public class DLList<T> implements Iterable<T> {
 
 		@Override
 		public T next() {
+			if (isEmpty())
+				throw new NoSuchElementException();
 			if(current == null && front != null){
-				current = (Node<T>) front;
+				current = front;
 			} else {
+				if (current.next == null)
+					throw new NoSuchElementException();
 				current = current.next;
 			}
 			return current.getData();
