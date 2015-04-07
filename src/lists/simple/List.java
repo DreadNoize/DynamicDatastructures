@@ -1,5 +1,8 @@
 package lists.simple;
 
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
 /**
  * This simple generic list of type T knows only its front and rear nodes. It
  * can do most basic list operations like app - and prepending, adding and
@@ -7,7 +10,7 @@ package lists.simple;
  * Constructor @params can be varargs of values.
  * */
 
-public class List<T> {
+public class List<T> implements Iterable<T>{
 	private int size;
 
 	private Node<T> front;
@@ -206,6 +209,17 @@ public class List<T> {
 		}
 	}
 
+	public void deleteNode(Node<T> toDelete) {
+		if (toDelete != null && !isEmpty()) {
+			for (Node<T> it = front; it != null; it = it.next) {
+				if (it.next == toDelete) {
+					it.next = toDelete.next;
+					size--;
+				}
+			}
+		}
+	}
+
 	public void delete_byVal(T data) { delete_byIndex(indexOf(data)); }
 
 	public void reverse() {
@@ -276,4 +290,39 @@ public class List<T> {
 		return clone;
 	}
 
+	class SimpleIterator implements Iterator<T> {
+		Node<T> current = null;
+
+		@Override
+		public boolean hasNext() {
+			if (current == null) {
+				return front != null;
+			}
+			return current.next != null;
+		}
+
+		@Override
+		public T next() {
+			if (isEmpty())
+				throw new NoSuchElementException();
+			if(current == null && front != null){
+				current = front;
+			} else {
+				if (current.next == null)
+					throw new NoSuchElementException();
+				current = current.next;
+			}
+			return current.getData();
+		}
+
+		@Override
+		public void remove() {
+			deleteNode(current);
+		}
+	}
+
+	@Override
+	public Iterator<T> iterator() {
+		return new SimpleIterator();
+	}
 }
