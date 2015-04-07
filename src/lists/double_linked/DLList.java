@@ -120,7 +120,7 @@ public class DLList<T> implements Iterable<T> {
 				it = it.next;
 			return it;
 		} else {
-			throw new lists.IndexOutUfBoundsException("Couldn't get Node at " + index);
+			throw new lists.IndexOutOfBoundsException("Couldn't get Node at " + index);
 		}
 	}
 
@@ -188,6 +188,8 @@ public class DLList<T> implements Iterable<T> {
 		if (index == 0) {
 			prepend(data);
 		} else {
+			if ((index - 1) > size)
+				throw new lists.IndexOutOfBoundsException((index - 1) + " is larger than size: " + size);
 			Node<T> it = getNode(index - 1);
 			if (it != null)
 				insertAfterNode(it, data);
