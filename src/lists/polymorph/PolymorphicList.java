@@ -1,5 +1,8 @@
 package lists.polymorph;
 
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
 /**
  * This double linked {@link PolymorphicList} list only knows its front and rear
  * nodes. The nodes can contain elements of any complex type. It can do most
@@ -8,7 +11,7 @@ package lists.polymorph;
  * Constructor @params can be varargs of values.
  * */
 
-public class PolymorphicList {
+public class PolymorphicList implements Iterable{
 	private int size;
 
 	private Node front;
@@ -210,6 +213,17 @@ public class PolymorphicList {
 		}
 	}
 	
+	public void deleteNode(Node toDelete) {
+		if (toDelete != null && !isEmpty()) {
+			for (Node it = front; it != null; it = it.next) {
+				if (it.next == toDelete) {
+					it.next = toDelete.next;
+					size--;
+				}
+			}
+		}
+	}
+
 	public void deleteLast() {
 		setRear(getRear().prev);
 	}
@@ -292,5 +306,41 @@ public class PolymorphicList {
 		clone.updateRear();
 		clone.countElems();
 		return clone;
+	}
+
+	class PolymorphIterator implements Iterator {
+		Node current = null;
+
+		@Override
+		public boolean hasNext() {
+			if (current == null) {
+				return front != null;
+			}
+			return current.next != null;
+		}
+
+		@Override
+		public Object next() {
+			if (isEmpty())
+				throw new NoSuchElementException();
+			if(current == null && front != null){
+				current = front;
+			} else {
+				if (current.next == null)
+					throw new NoSuchElementException();
+				current = current.next;
+			}
+			return current.getData();
+		}
+
+		@Override
+		public void remove() {
+			deleteNode(current);
+		}
+	}
+
+	@Override
+	public Iterator iterator() {
+		return new PolymorphIterator();
 	}
 }
