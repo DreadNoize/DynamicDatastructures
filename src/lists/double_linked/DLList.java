@@ -213,6 +213,17 @@ public class DLList<T> implements Iterable<T> {
 		}
 	}
 	
+	public void deleteNode(Node<T> toDelete) {
+		if (toDelete != null) {
+			if (toDelete.next != null) {
+				toDelete.next.prev = toDelete.prev;
+				toDelete.prev.next = toDelete.next;
+				size--;
+			} else {
+				deleteLast();			}
+		}
+	}
+
 	public void deleteLast() {
 		setRear(getRear().prev);
 	}
@@ -297,8 +308,8 @@ public class DLList<T> implements Iterable<T> {
 		return clone;
 	}
 
-	class MyIterator<T> implements Iterator<T> {
-		Node<T> current =null;
+	class DLLIterator implements Iterator<T> {
+		Node<T> current = null;
 		@Override
 		public boolean hasNext() {
 			if(current == null){
@@ -314,21 +325,17 @@ public class DLList<T> implements Iterable<T> {
 			} else {
 				current = current.next;
 			}
-			
 			return current.getData();
 		}
 
 		@Override
 		public void remove() {
-			// TODO Auto-generated method stub
-			
+			deleteNode(current);
 		}
-		
 	}
+
 	@Override
 	public Iterator<T> iterator() {
-		
-		
-		return new MyIterator<T>();
+		return new DLLIterator();
 	}
 }
