@@ -212,7 +212,6 @@ public class PolymorphicList {
 	
 	public void deleteLast() {
 		setRear(getRear().prev);
-		size--;
 	}
 
 	public void delete_byVal(Object data) { delete_byIndex(indexOf(data)); }
