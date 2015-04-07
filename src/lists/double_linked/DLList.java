@@ -1,5 +1,7 @@
 package lists.double_linked;
 
+import java.util.Iterator;
+
 /**
  * This double linked generic list of type T knows only its front and rear
  * nodes. It can do most basic list operations like app - and prepending, adding
@@ -7,7 +9,7 @@ package lists.double_linked;
  * Constructor @params can be varargs of values.
  */
 
-public class DLList<T> {
+public class DLList<T> implements Iterable<T> {
 	private int size;
 
 	private Node<T> front;
@@ -288,5 +290,40 @@ public class DLList<T> {
 		clone.updateRear();
 		clone.countElems();
 		return clone;
+	}
+
+	class MyIterator<T> implements Iterator<T> {
+		Node<T> current =null;
+		@Override
+		public boolean hasNext() {
+			if(current == null){
+				return front != null;
+			}
+			return current.next != null;
+		}
+
+		@Override
+		public T next() {
+			if(current == null && front != null){
+				current = (Node<T>) front;
+			} else {
+				current = current.next;
+			}
+			
+			return current.getData();
+		}
+
+		@Override
+		public void remove() {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	}
+	@Override
+	public Iterator<T> iterator() {
+		
+		
+		return new MyIterator<T>();
 	}
 }

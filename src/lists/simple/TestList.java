@@ -1,7 +1,5 @@
 package lists.simple;
 
-import java.util.Arrays;
-
 /**
  * Created by ra on 02.04.15. 'Simple generic list' tester.
  */
@@ -68,7 +66,7 @@ public class TestList {
 		System.out.println("Does the empty List<String> contain \"This\"? "
 				+ new List<String>().contains("This"));
 		System.out.println(integers);
-		System.out.println(Arrays.toString(integers.toArray()));
+		System.out.println(java.util.Arrays.toString(integers.toArray()));
 
 		System.out.println(integerClone);
 		System.out.println(integerClone.subList(0, 7));

@@ -20,6 +20,8 @@ public class TestDLList {
 		System.out.println();
 
 		DLList<Integer> integers = new DLList<Integer>(1, 2, 3, 4, 5, 6, 7, 8, 9);
+		for (Integer integ: integers)
+			System.out.println(integ);
 
 		DLList<String> strings = new DLList<String>("This", "might", "work", "now!");
 
