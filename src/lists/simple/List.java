@@ -25,16 +25,16 @@ public class List<T> implements Iterable<T>{
 
 	public Node<T> getRear() { return rear; }
 
-	private void setRear(Node<T> rear) {
+	private void setRear(Node<T> newRear) {
 		if (this.rear != null) {
-			if (rear != null)
-				this.rear.next = rear;
-			this.rear = rear;
-			rear.next = null;
+			if (newRear != null)
+				this.rear.next = newRear;
+			this.rear = newRear;
+			newRear.next = null;
 			countElems();
 		} else {
 			updateRear();
-			setRear(rear);
+			setRear(newRear);
 		}
 	}
 	

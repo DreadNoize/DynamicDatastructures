@@ -26,19 +26,18 @@ public class PolymorphicList implements Iterable{
 
 	public Node getRear() { return rear; }
 
-	private void setRear(Node rear) {
+	private void setRear(Node newRear) {
 		if (this.rear != null) {
-			if (rear != null)
-				this.rear.next = rear;
-			this.rear = rear;
-			rear.next = null;
+			if (newRear != null)
+				this.rear.next = newRear;
+			this.rear = newRear;
+			newRear.next = null;
 			countElems();
 		} else {
 			updateRear();
-			setRear(rear);
+			setRear(newRear);
 		}
 	}
-
 
 	public int getSize() { return size; }
 
