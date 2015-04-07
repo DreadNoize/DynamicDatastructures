@@ -41,6 +41,7 @@ public class PolymorphicList implements Iterable{
 
 	public int getSize() { return size; }
 
+	/** Resets the size variable, useful after sublisting or setting new rear */
 	private void countElems() {
 		int counter = 0;
 		for (Node it = front; it != null; it = it.next) {
@@ -51,6 +52,7 @@ public class PolymorphicList implements Iterable{
 		size = counter;
 	}
 
+	/** resets the rear pointer to first element that has next == null */
 	private void updateRear() {
 		for (Node it = front; it != null; it = it.next) {
 			if (it.next == null)
@@ -61,6 +63,9 @@ public class PolymorphicList implements Iterable{
 
 	public boolean isEmpty() { return front == null; }
 
+	/**
+	 * Makes a new rear element with @param data of matching type
+	 * */
 	public void append(Object data) {
 		Node toAppend = new Node(data);
 		if (isEmpty()) {
@@ -75,20 +80,23 @@ public class PolymorphicList implements Iterable{
 		}
 	}
 
+	/**
+	 * Makes a new front element with @param data of matching type
+	 * */
 	public void prepend(Object data) {
 		Node toPrepend = new Node(data);
-		if (isEmpty()) {
+		if (isEmpty()) { // toPrepend is alone
 		    front = toPrepend;
 		    rear = toPrepend;
 		} else {
 			toPrepend.setNext(front);
 		    front.setPrev(toPrepend);
 		    front = toPrepend;
-		    
 		}
 		size++;
 	}
-	
+
+	@Override
 	public String toString() {
 		StringBuilder result = new StringBuilder("elements: " + size
 				+ ": ");
@@ -102,7 +110,8 @@ public class PolymorphicList implements Iterable{
 		}
 		return result.toString();
 	}
-	
+
+	/** @return array representation of list */
 	public Node[] toArray() {
 		countElems();
 

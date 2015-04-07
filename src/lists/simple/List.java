@@ -40,6 +40,7 @@ public class List<T> implements Iterable<T>{
 	
 	public int getSize() { return size;	}
 
+	/** Resets the size variable, useful after sublisting or setting new rear */
 	private void countElems() {
 		int counter = 0;
 		for (Node<T> it = front; it != null; it = it.next) {
@@ -50,6 +51,7 @@ public class List<T> implements Iterable<T>{
 		size = counter;
 	}
 
+	/** resets the rear pointer to first element that has next == null */
 	private void updateRear() {
 		for (Node<T> it = front; it != null; it = it.next) {
 			if (it.next == null)
@@ -60,6 +62,9 @@ public class List<T> implements Iterable<T>{
 
 	public boolean isEmpty() { return front == null; }
 
+	/**
+	 * Makes a new front element with @param data of matching type
+	 * */
 	public void append(T data) {
 		Node<T> toAppend = new Node<T>(data);
 		if (isEmpty()) {
@@ -73,19 +78,22 @@ public class List<T> implements Iterable<T>{
 		}
 	}
 
+	/**
+	 * Makes a new rear element with @param data of matching type
+	 * */
 	public void prepend(T data) {
 		Node<T> toPrepend = new Node<T>(data);
-		if (isEmpty()) {
+		if (isEmpty()) { // toPrepend is alone
 		    front = toPrepend;
 		    rear = toPrepend;
 		} else {
 			toPrepend.setNext(front);
 		    front = toPrepend;
-		    
 		}
 		size++;
 	}
-	
+
+	@Override
 	public String toString() {
 		StringBuilder result = new StringBuilder("elements: " + size
 				+ ": ");
@@ -100,6 +108,7 @@ public class List<T> implements Iterable<T>{
 		return result.toString();
 	}
 
+	/** @return array representation of list */
 	public Node<T>[] toArray() {
 		countElems();
 		
