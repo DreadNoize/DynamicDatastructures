@@ -175,7 +175,7 @@ public class List<T> implements Iterable<T>{
 		}
 		return indices;
 	}
-
+	
 	public void insertAfterNode(Node<T> it, T data) {
 		if (it == null)
 			throw new lists.InsertAfterNullException();
@@ -261,8 +261,6 @@ public class List<T> implements Iterable<T>{
 			return connedInit;
 		}
 	}
-
-	public T head() { return this.front.getData(); }
 
 	public List<T> tail() { return subList(1, size); }
 

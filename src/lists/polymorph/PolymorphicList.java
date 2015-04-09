@@ -288,8 +288,6 @@ public class PolymorphicList implements Iterable{
 		return null;
 	}
 	
-	public Object head() { return this.front.getData(); }
-
 	public PolymorphicList tail() { return subList(1, size); }
 	
 	public PolymorphicList clone() {
@@ -302,7 +300,6 @@ public class PolymorphicList implements Iterable{
 		} else {
 			for (Node it = front; it != null; it = it.next) {
 				clone.append(it.getData());
-
 			}
 			return clone;
 		}

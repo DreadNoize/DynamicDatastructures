@@ -290,8 +290,6 @@ public class DLList<T> implements Iterable<T> {
 		return null;
 	}
 	
-	public T head() { return this.front.getData(); }
-
 	public DLList<T> tail() { return subList(1, size); }
 	
 	public DLList<T> clone() {
