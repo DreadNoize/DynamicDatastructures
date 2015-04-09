@@ -313,7 +313,7 @@ public class PolymorphicList implements Iterable{
 		return clone;
 	}
 
-	class PolymorphIterator implements Iterator {
+	class PolymorphIterator implements Iterator<Object> {
 		Node current = null;
 
 		@Override
@@ -345,7 +345,7 @@ public class PolymorphicList implements Iterable{
 	}
 
 	@Override
-	public Iterator iterator() {
+	public Iterator<Object> iterator() {
 		return new PolymorphIterator();
 	}
 }
