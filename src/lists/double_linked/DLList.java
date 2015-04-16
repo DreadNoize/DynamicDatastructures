@@ -43,7 +43,7 @@ public class DLList<T> implements Iterable<T> {
 	/** Resets the size variable, useful after sublisting or setting new rear */
 	private void countElems() {
 		int counter = 0;
-		for (Node<T> it = front; it != null; it = it.next) {
+		for (@SuppressWarnings("unused") T it : this) {
 			counter++;
 		}
 		if (size != counter) //this is usually intended!
@@ -102,10 +102,10 @@ public class DLList<T> implements Iterable<T> {
 		if (isEmpty()) {
 			result.append("List is empty!");
 		} else {
-			for (Node<T> it = front; it.next != null; it = it.next) {
+			for (Node<T> it = front; it.next != null; it = it.next) { // don't go over rear because of formatting
 				result.append(it + ", ");
 			}
-			result.append(getRear());
+			result.append(getRear()); // append rear without comma in the end!
 		}
 		return result.toString();
 	}
@@ -136,8 +136,8 @@ public class DLList<T> implements Iterable<T> {
 	public boolean contains(T data) {
 		if (size == 0)
 			return false;
-		for (Node<T> it = front; it != null; it = it.next) {
-			if (data.equals(it.getData())) {
+		for (T it : this) {
+			if (data.equals(it)) {
 				return true;
 			}
 		}
@@ -234,7 +234,12 @@ public class DLList<T> implements Iterable<T> {
 	}
 
 	public void deleteLast() {
-		setRear(getRear().prev);
+		if (size > 1)
+			setRear(getRear().prev);
+		else {
+			front = null;
+			rear = null;
+		}
 	}
 
 	public void delete_byVal(T data) { delete_byIndex(indexOf(data)); }
@@ -253,6 +258,15 @@ public class DLList<T> implements Iterable<T> {
 		rear = front;
 		front = tmp; // swap end pointers
 		setPrevPointers();
+	}
+
+	public DLList<T> recReverse(DLList<T> toRev) {
+		if (size < 1) { return toRev; }
+
+		else {
+			
+			return toRev.concat(recReverse(toRev.tail()));
+		}
 	}
 
 	private void setPrevPointers() {
@@ -277,7 +291,7 @@ public class DLList<T> implements Iterable<T> {
 			return connedInit;
 		}
 	}
-	
+
 	public DLList<T> subList(int start, int end) {
 		if (start >= 0 && end > start && end <= size) {
 			DLList<T> sublist = this.clone();
@@ -289,9 +303,14 @@ public class DLList<T> implements Iterable<T> {
 		System.out.println("Invalid slice!");
 		return null;
 	}
-	
-	public DLList<T> tail() { return subList(1, size); }
-	
+
+	public DLList<T> emptyList() { return new DLList<>(); }
+
+	public DLList<T> tail() {
+		if (size == 1)
+			return emptyList();
+		return subList(1, size); }
+
 	public DLList<T> clone() {
 		DLList<T> clone = new DLList<T>();
 		if (size <= 0) {
