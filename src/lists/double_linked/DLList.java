@@ -78,7 +78,7 @@ public class DLList<T> implements Iterable<T> {
 			setRear(toAppend);
 		}
 	}
-	
+
 	/**
 	 * Makes a new rear element with @param data of matching type
 	 * */
@@ -167,6 +167,7 @@ public class DLList<T> implements Iterable<T> {
 		}
 		return counter;
 	}
+	
 	public int[] search(T data) {
 		int currInd = 0;
 		int[] indices = new int[countOccurence(data)];
@@ -221,7 +222,7 @@ public class DLList<T> implements Iterable<T> {
 			}
 		}
 	}
-	
+
 	public void deleteNode(Node<T> toDelete) {
 		if (toDelete != null) {
 			if (toDelete.next != null) {
@@ -229,7 +230,8 @@ public class DLList<T> implements Iterable<T> {
 				toDelete.prev.next = toDelete.next;
 				size--;
 			} else {
-				deleteLast();			}
+				deleteLast();
+				}
 		}
 	}
 
@@ -264,7 +266,6 @@ public class DLList<T> implements Iterable<T> {
 		if (size < 1) { return toRev; }
 
 		else {
-			
 			return toRev.concat(recReverse(toRev.tail()));
 		}
 	}

@@ -43,7 +43,7 @@ public class List<T> implements Iterable<T>{
 	/** Resets the size variable, useful after sublisting or setting new rear */
 	private void countElems() {
 		int counter = 0;
-		for (Node<T> it = front; it != null; it = it.next) {
+		for (@SuppressWarnings("unused") T it : this) {
 			counter++;
 		}
 		if(size != counter) //this is usually intended!
@@ -100,7 +100,7 @@ public class List<T> implements Iterable<T>{
 		if (isEmpty()) {
 			result.append("List is empty!");
 		} else {
-			for (Node<T> it = front; it.next != null; it = it.next) {
+			for (T it : this) {
 				result.append(it + ", ");
 			}
 			result.append(getRear());
@@ -134,12 +134,19 @@ public class List<T> implements Iterable<T>{
 	public boolean contains(T data) {
 		if (size == 0)
 			return false;
-		for (Node<T> it = front; it != null; it = it.next) {
-			if (data.equals(it.getData())) {
+		for (T it : this) {
+			if (data.equals(it)) {
 				return true;
 			}
 		}
 		return false;
+	}
+
+	public T minimum() {
+		if (front.getData() instanceof Comparable) {
+			System.out.println(front);
+		}
+		return front.getData();
 	}
 
 	public int indexOf(T data) {

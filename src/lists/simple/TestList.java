@@ -76,6 +76,8 @@ public class TestList {
 		System.out.println(ints.getNode(9));
 
 		System.out.println(strings.indexOf("slice"));
+
+		integers.minimum();
 	}
 
 }

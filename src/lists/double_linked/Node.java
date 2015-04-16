@@ -62,5 +62,4 @@ public class Node<T> {
 			return new Node<T>(data, this, null);
 		}
 	}
-
 }

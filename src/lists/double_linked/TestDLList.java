@@ -68,5 +68,8 @@ public class TestDLList {
 		System.out.println(integerClone.subList(0, 4));
 
 		System.out.println("Recursive clone: " + integers.cloneRec());
+		
+		integers.recReverse(integers);
+		System.out.println(integers);
 	}
 }

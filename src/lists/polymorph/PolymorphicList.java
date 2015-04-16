@@ -44,7 +44,7 @@ public class PolymorphicList implements Iterable{
 	/** Resets the size variable, useful after sublisting or setting new rear */
 	private void countElems() {
 		int counter = 0;
-		for (Node it = front; it != null; it = it.next) {
+		for (@SuppressWarnings("unused") Object it : this) {
 			counter++;
 		}
 		if (size != counter) //this is usually intended!
@@ -103,7 +103,7 @@ public class PolymorphicList implements Iterable{
 		if (isEmpty()) {
 			result.append("List is empty!");
 		} else {
-			for (Node it = front; it.next != null; it = it.next) {
+			for (Object it : this) {
 				result.append(it + ", ");
 			}
 			result.append(getRear());
@@ -136,8 +136,8 @@ public class PolymorphicList implements Iterable{
 	public boolean contains(Object data) {
 		if (size == 0)
 			return false;
-		for (Node it = front; it != null; it = it.next) {
-			if (data.equals(it.getData())) {
+		for (Object it : this) {
+			if (data.equals(it)) {
 				return true;
 			}
 		}
