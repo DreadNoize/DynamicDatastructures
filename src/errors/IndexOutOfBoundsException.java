@@ -1,4 +1,4 @@
-package lists;
+package errors;
 
 public class IndexOutOfBoundsException extends RuntimeException {
 

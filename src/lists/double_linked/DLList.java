@@ -129,7 +129,7 @@ public class DLList<T> implements Iterable<T> {
 				it = it.next;
 			return it;
 		} else {
-			throw new lists.IndexOutOfBoundsException("Couldn't get Node at " + index);
+			throw new errors.IndexOutOfBoundsException("Couldn't get Node at " + index);
 		}
 	}
 
@@ -154,7 +154,7 @@ public class DLList<T> implements Iterable<T> {
 			}
 		}
 		if (index >= size) {
-			throw new lists.ElementNotFoundException(data.toString());
+			throw new errors.ElementNotFoundException(data.toString());
 		}
 		return index;
 	}
@@ -180,7 +180,7 @@ public class DLList<T> implements Iterable<T> {
 
 	public void insertAfterNode(Node<T> it, T data) {
 		if (it == null)
-			throw new lists.InsertAfterNullException();
+			throw new errors.InsertAfterNullException();
 		Node<T> toInsert = new Node<T>(data);
 
 		if (it.next == null) { // inserted is last
@@ -199,7 +199,7 @@ public class DLList<T> implements Iterable<T> {
 			prepend(data);
 		} else {
 			if ((index - 1) > size)
-				throw new lists.IndexOutOfBoundsException((index - 1) + " is larger than size: " + size);
+				throw new errors.IndexOutOfBoundsException((index - 1) + " is larger than size: " + size);
 			Node<T> it = getNode(index - 1);
 			if (it != null)
 				insertAfterNode(it, data);

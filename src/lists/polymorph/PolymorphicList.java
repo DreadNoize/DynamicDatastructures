@@ -129,7 +129,7 @@ public class PolymorphicList implements Iterable{
 				it = it.next;
 			return it;
 		} else {
-			throw new lists.IndexOutOfBoundsException("Couldn't get Node at " + index);
+			throw new errors.IndexOutOfBoundsException("Couldn't get Node at " + index);
 		}
 	}
 
@@ -154,7 +154,7 @@ public class PolymorphicList implements Iterable{
 			}
 		}
 		if (index >= size) {
-			throw new lists.ElementNotFoundException(data.toString());
+			throw new errors.ElementNotFoundException(data.toString());
 		}
 		return index;
 	}
@@ -180,7 +180,7 @@ public class PolymorphicList implements Iterable{
 
 	public void insertAfterNode(Node it, Object data) {
 		if (it == null)
-			throw new lists.InsertAfterNullException();
+			throw new errors.InsertAfterNullException();
 		Node toInsert = new Node(data);
 
 		if (it.next == null) { // inserted is last
