@@ -29,7 +29,7 @@ public class DLList<T> {
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder("elements: " + size
-                + ": ");
+                + "; ");
         if (isEmpty()) {
             result.append("List is empty!");
         } else {
@@ -56,5 +56,11 @@ public class DLList<T> {
             }
         }
         throw new IllegalArgumentException("Size was " + size + " and index was " + index); // fail ungracefully.
+    }
+    
+    public void remove(int index) { // if index is invalid: get() will throw error.
+    	Node<T> toRemove = get(index);
+    	// more...
+    size--;
     }
 }
