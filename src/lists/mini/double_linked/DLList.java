@@ -1,4 +1,4 @@
-package lists.mini.double_linked;
+package double_linked;
 
 public class DLList<T> {
     private int size;

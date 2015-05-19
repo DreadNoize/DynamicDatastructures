@@ -1,4 +1,4 @@
-package lists.mini.double_linked;
+package double_linked;
 
 // this requires the -ea (enable assertions) flag
 // go to 'Run → Run conf → arguments tab → vm options field
