@@ -42,18 +42,19 @@ public class DLList<T> {
         return result.toString();
     }
 
-    public Node<T> get(int index) { // Return Node<T> and not T. Otherwise unable to reuse this method in remove()!
+    public Node<T> get(int index) { // Return Node<T> instead of T to be able to reuse this method in remove()
+    	                            // this violates encapsulation and the task description of A'n'D 6
         if (index < size && index >= 0) { // if isEmpty(), index is not less than size
-            if (index < size / 2) {
+            if (index < size / 2) { // two cases; forward and backward.
                 Node<T> it = front;
                 for (int i = 0; i < index; i++) it = it.next;
                 return it;
             } else {
-                Node<T> it = rear;
-                for (int i = size; i > index; i--) it = it.prev;
+            	Node<T> it = rear;
+                for (int i = size - 1; i > index; i--) it = it.prev;
                 return it;
             }
         }
-        throw new IllegalArgumentException("Size was " + size + " and index was " + index);
+        throw new IllegalArgumentException("Size was " + size + " and index was " + index); // fail ungracefully.
     }
 }
