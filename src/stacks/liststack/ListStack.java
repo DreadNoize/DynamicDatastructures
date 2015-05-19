@@ -1,6 +1,6 @@
 package stacks.liststack;
 
-import lists.simple.Node;
+import lists.single_linked.Node;
 
 public class ListStack<T> {
 	private Node<T> sp;

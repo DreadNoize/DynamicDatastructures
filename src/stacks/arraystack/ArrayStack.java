@@ -1,6 +1,6 @@
 package stacks.arraystack;
 
-import lists.simple.Node;
+import lists.single_linked.Node;
 
 public class ArrayStack<T> {
 	private Node<T>[] stack;

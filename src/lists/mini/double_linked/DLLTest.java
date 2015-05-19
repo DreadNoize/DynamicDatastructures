@@ -9,6 +9,6 @@ public class DLLTest {
         assert !test.isEmpty();
         System.out.println(test.getSize());
         System.out.println(test.get(4));
-        System.out.println(test.toString());
+        System.out.println(test);
     }
 }
