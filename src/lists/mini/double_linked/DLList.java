@@ -42,6 +42,18 @@ public class DLList<T> {
         return result.toString();
     }
 
+    private Node<T> getNode(int index) {
+        if(0 <= index && index < size) {
+        	Node<T> it = front;
+            while (index > 0) {
+                it = it.next;
+                index--;
+            }
+            return it;
+        }
+        throw new IndexOutOfBoundsException("Index out of bounds: index was " + index + " and size was " + size);
+    }
+
     public Node<T> get(int index) { // Return Node<T> instead of T to be able to reuse this method in remove()
     	                            // this violates encapsulation and the task description of A'n'D 6
         if (index < size && index >= 0) { // if isEmpty(), index is not less than size

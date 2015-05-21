@@ -2,7 +2,7 @@ package double_linked;
 
 public class Node<T> {
 	private T data;
-	Node<T> next; // no access modifier: package level access.
+	Node<T> next; // no access modifier: package level access. (?better way¿)
 	Node<T> prev;
 
 	public Node(T data, Node<T> prev, Node<T> next) {
