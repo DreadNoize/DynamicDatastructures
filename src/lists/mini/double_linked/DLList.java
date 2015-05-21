@@ -15,13 +15,13 @@ public class DLList<T> {
     public boolean isEmpty() { return front == null && rear == null; }
 
     public void add(T data) {
-        Node<T> toAppend = new Node<T>(data);
+        Node<T> toAdd = new Node<T>(data);
         if (isEmpty()) {
-            front = rear = toAppend;
+            front = rear = toAdd;
         } else {
-            toAppend.setPrev(rear);
-            rear.setNext(toAppend);
-            rear = toAppend;
+            toAdd.setPrev(rear);
+            rear.setNext(toAdd);
+            rear = toAdd;
         }
         size++;
     }

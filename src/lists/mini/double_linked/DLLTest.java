@@ -9,7 +9,8 @@ public class DLLTest {
         assert !test.isEmpty();
         System.out.println(test.getSize());
         System.out.println(test.get(4));
-        test.remove(9);
+        test.remove(5);
+        test.add(false); // werden boolean werte eigentlich geautoboxt!?
         System.out.println(test);
 
     }
