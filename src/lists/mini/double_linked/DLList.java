@@ -51,27 +51,15 @@ public class DLList<T> {
             }
             return it;
         }
-        throw new IndexOutOfBoundsException("Index out of bounds: index was " + index + " and size was " + size);
+        throw new IndexOutOfBoundsException("Index out of bounds: index was " + index + " and size was " + size); // ungraceful fail
     }
 
-    public Node<T> get(int index) { // Return Node<T> instead of T to be able to reuse this method in remove()
-    	                            // this violates encapsulation and the task description of A'n'D 6
-        if (index < size && index >= 0) { // if isEmpty(), index is not less than size
-            if (index < size / 2) { // two cases; forward and backward.
-                Node<T> it = front;
-                for (int i = 0; i < index; i++) it = it.next;
-                return it;
-            } else {
-            	Node<T> it = rear;
-                for (int i = size - 1; i > index; i--) it = it.prev;
-                return it;
-            }
-        }
-        throw new IllegalArgumentException("Size was " + size + " and index was " + index); // fail ungracefully.
+    public T get(int index) {
+    	return getNode(index).getData();
     }
     
     public void remove(int index) { // if index is invalid: get() will throw error.
-    	Node<T> toRemove = get(index);
+    	Node<T> toRemove = getNode(index);
     	// more...
     size--;
     }
