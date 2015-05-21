@@ -12,7 +12,7 @@ public class DLList<T> {
 
     public int getSize() { return size;	}
 
-    public boolean isEmpty() { return front == null; }
+    public boolean isEmpty() { return front == null && rear == null; }
 
     public void add(T data) {
         Node<T> toAppend = new Node<T>(data);
