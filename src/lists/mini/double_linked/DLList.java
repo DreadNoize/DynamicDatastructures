@@ -32,6 +32,7 @@ public class DLList<T> implements Iterable<T> {
 		size++;
 	}
 
+	/** @see <a href="https://docs.oracle.com/javase/7/docs/api/java/lang/StringBuilder.html#setLength(int)">setLength docs</a> **/
 	@Override
 	public String toString() {
 		StringBuilder result = new StringBuilder("# of elements is " + size + ". ");
@@ -42,6 +43,7 @@ public class DLList<T> implements Iterable<T> {
 				result.append(it + ", ");
 			}
 		}
+		result.setLength(result.length() - 2); // remove comma in 0(1)
 		return result.toString();
 	}
 
@@ -54,6 +56,7 @@ public class DLList<T> implements Iterable<T> {
 				result.append(it.getClass().getSimpleName() + ", ");
 			}
 		}
+		result.setLength(result.length() - 2); // remove comma in 0(1)
 		return result.toString();
 	}
 
