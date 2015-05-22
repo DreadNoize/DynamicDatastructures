@@ -24,8 +24,7 @@ public class DLList<T> {
 		if (isEmpty()) {
 			front = rear = toAdd;
 		} else {
-			toAdd.setPrev(rear);
-			rear.setNext(toAdd);
+			toAdd.setPrev(rear); // also handles setting rear.next to this
 			rear = toAdd;
 		}
 		size++;
