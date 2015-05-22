@@ -38,7 +38,7 @@ public class DLList<T> implements Iterable<T> {
 
 	@Override
 	public String toString() {
-		StringBuilder result = new StringBuilder("elements: " + size + "; ");
+		StringBuilder result = new StringBuilder("# of elements is " + size + ". ");
 		if (isEmpty()) {
 			result.append("List is empty!");
 		} else {
