@@ -1,27 +1,59 @@
 package ringpuffer;
 
 public class Ringpuffer {
-	private final int INIT_SIZE = 10;
-	private int currentSize = 10;
-	private int[] arli = new int[INIT_SIZE];
-	private int first;
-	private int end;
+	private int   currentSize;
+	private int[] arli;
+	private int   first = 0;
+	private int   end   = 0;
 
-	private boolean isFull() {
-		return first == end && arli[first] != -1;
+	public Ringpuffer(int cap) {
+		if(cap > 0) {
+		currentSize = cap;
+		arli = new int[currentSize];
+		arli[0] = 0; // 0 is poison value
+		}
 	}
-	
+
+	private boolean isFull() { // reclaim somehow? isHalfFull() is tricky
+		return first == end && arli[first] != 0;
+	}
+
 	private boolean isEmpty() {
-		return first == end && arli[first] == -1;
+		return first == end && arli[first] == 0;
 	}
-	
+
 	public void offer(int data) {
-		arli[end++] = data;
+		if (!isFull()) {
+		arli[end++ % currentSize] = data;
+		} else {
+			enlarge();
+			offer(data);
+		}
 	}
-	
+
+	private void enlarge() {
+		currentSize *= 2;
+		System.out.println("enlarging to " + currentSize);
+		int[] newArr = new int[currentSize];
+		System.arraycopy(arli, 0, newArr, 0, arli.length);
+		arli = newArr;
+		newArr = null;
+	}
+
 	public int poll() {
-		int temp = arli[first]; // -1 if isEmpty()
-		arli[first++] = -1;
+		if (!isEmpty()) {
+		int temp = arli[first];
+		arli[first] = 0;
+		first = (first + 1) % currentSize;
 		return temp;
+		}
+		return -1;
+	}
+
+	private int peek() {
+		if(!isEmpty()) {
+			return arli[first];
+		}
+		return -1;
 	}
 }
