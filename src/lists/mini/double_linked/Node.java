@@ -11,19 +11,24 @@ public class Node<T> {
 		this.next = next;
 	}
 
-	public Node(T data) { this.data = data; }
+	public Node(T data) {
+		this.data = data;
+	}
 
-	public T getData() { return data; }
+	public T getData() {
+		return data;
+	}
 
 	public void setData(T data) {
 		if (data != null) {
-			this.data = data; }
+			this.data = data;
+		}
 	}
 
 	public void setPrev(Node<T> prev) {
 		if (prev != null) {
 			this.prev = prev;
-			prev.next = this; // An object has access to private features of same class
+			prev.next = this;
 		}
 	}
 
@@ -34,9 +39,13 @@ public class Node<T> {
 		}
 	}
 
-	public Node<T> getNext() { return next; }
-	
-	public Node<T> getPrev() { return prev; }
+	public Node<T> getNext() {
+		return next;
+	}
+
+	public Node<T> getPrev() {
+		return prev;
+	}
 
 	@Override
 	public String toString() {
