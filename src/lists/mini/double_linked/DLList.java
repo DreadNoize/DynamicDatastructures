@@ -1,9 +1,6 @@
 package double_linked;
 
 import java.util.Iterator;
-import java.util.NoSuchElementException;
-
-import lists.double_linked.Node;
 
 public class DLList<T> implements Iterable<T> {
     private int size;
@@ -11,7 +8,7 @@ public class DLList<T> implements Iterable<T> {
 	private Node<T> front;
 	private Node<T> rear;
 
-	public DLList(T... vs) {
+	public DLList(T... vs) { // varargs
 		for (T value : vs)
 			add(value);
 	}
@@ -124,12 +121,12 @@ public class DLList<T> implements Iterable<T> {
 		@Override
 		public T next() {
 			if (isEmpty())
-				throw new NoSuchElementException();
+				throw new java.util.NoSuchElementException();
 			if (current == null && front != null) {
 				current = front;
 			} else {
 				if (current.next == null)
-					throw new NoSuchElementException();
+					throw new java.util.NoSuchElementException();
 				current = current.next;
 			}
 			return current.getData();
