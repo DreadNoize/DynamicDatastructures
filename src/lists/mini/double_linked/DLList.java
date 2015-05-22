@@ -43,7 +43,7 @@ public class DLList<T> implements Iterable<T> {
 				result.append(it + ", ");
 			}
 		}
-		result.setLength(result.length() - 2); // remove comma in 0(1)
+		result.setLength(result.length() - 2); // remove last comma in 0(1)
 		return result.toString();
 	}
 
@@ -56,27 +56,27 @@ public class DLList<T> implements Iterable<T> {
 				result.append(it.getClass().getSimpleName() + ", ");
 			}
 		}
-		result.setLength(result.length() - 2); // remove comma in 0(1)
+		result.setLength(result.length() - 2); // remove last comma in 0(1)
 		return result.toString();
 	}
 
 	private Node<T> getNode(int index) {
-		if (0 <= index && index < (size / 2)) {
+		if (0 <= index && index < (size / 2)) { // first half
 			Node<T> it = front;
 			while (index > 0) {
 				it = it.next;
-				index--;
+				index--; // use index as counter
 			}
 			return it;
-		} else if (index >= (size / 2) && index < size) {
+		} else if (index >= (size / 2) && index < size) { //second half
 			Node<T> it = rear;
-			index = size - index - 1;
+			index = size - index - 1; // distance from wanted node to rear
 			while (index > 0) {
 				it = it.prev;
-				index--;
+				index--; // use index as counter
 			}
 			return it;
-		}
+		} // arrived here? if's above cover entire range → must be invalid index
 		throw new IndexOutOfBoundsException(
 				"Index out of bounds: index was " + index
 				+ " and size was " + size); // ungraceful fail
@@ -85,20 +85,20 @@ public class DLList<T> implements Iterable<T> {
 	public T get(int index) {
 		return getNode(index).getData();
 	}
-
+    /** remove a given node. Needed for Iterator **/
 	private void removeNode (Node<T> toRemove) {
-		if (toRemove == front && toRemove == rear) {
+		if (toRemove == front && toRemove == rear) { // single node
             front = rear = null;
         }
         else if (toRemove == front) {
             toRemove.next.prev = null;  // detach front
-            front = toRemove.next;      // set front
+            front = toRemove.next;      // set new front
         }
         else if (toRemove == rear) {
             toRemove.prev.next = null;  // detach rear
-            rear = toRemove.prev;       // set rear
+            rear = toRemove.prev;       // set new rear
         }
-        else {
+        else {                          // prev != null && next != null
             toRemove.prev.next = toRemove.next;
             toRemove.next.prev = toRemove.prev;
         }
