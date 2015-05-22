@@ -3,65 +3,76 @@ package double_linked;
 public class DLList<T> {
     private int size;
 
-    private Node<T> front;
-    private Node<T> rear;
+	private Node<T> front;
+	private Node<T> rear;
 
-    public DLList(T... vs) {
-        for (T value : vs) add(value);
-    }
+	public DLList(T... vs) {
+		for (T value : vs)
+			add(value);
+	}
 
-    public int getSize() { return size;	}
+	public int getSize() {
+		return size;
+	}
 
-    public boolean isEmpty() { return front == null && rear == null; }
+	public boolean isEmpty() {
+		return front == null && rear == null;
+	}
 
-    public void add(T data) {
-        Node<T> toAdd = new Node<T>(data);
-        if (isEmpty()) {
-            front = rear = toAdd;
-        } else {
-            toAdd.setPrev(rear);
-            rear.setNext(toAdd);
-            rear = toAdd;
-        }
-        size++;
-    }
+	public void add(T data) {
+		Node<T> toAdd = new Node<T>(data);
+		if (isEmpty()) {
+			front = rear = toAdd;
+		} else {
+			toAdd.setPrev(rear);
+			rear.setNext(toAdd);
+			rear = toAdd;
+		}
+		size++;
+	}
 
-    @Override
-    public String toString() {
-        StringBuilder result = new StringBuilder("elements: " + size + "; ");
-        if (isEmpty()) {
-            result.append("List is empty!");
-        } else {
-            result.append("[");
+	@Override
+	public String toString() {
+		StringBuilder result = new StringBuilder("elements: " + size + "; ");
+		if (isEmpty()) {
+			result.append("List is empty!");
+		} else {
+			result.append("[");
             for (Node<T> it = front; it.next != null; it = it.next) { // don't go over rear because of formatting
-                result.append(it + ", ");
-            }
-            result.append(rear + "]"); // add rear without comma in the end!
-        }
-        return result.toString();
-    }
+				result.append(it + ", ");
+			}
+           result.append(rear + "]"); // add rear without comma in the end!
+		}
+		return result.toString();
+	}
 
-    private Node<T> getNode(int index) {
-        if(0 <= index && index < size) {
-        	Node<T> it = front;
-            while (index > 0) {
-                it = it.next;
-                index--;
-            }
-            return it;
-        }
-        throw new IndexOutOfBoundsException("Index out of bounds: index was " + index + " and size was " + size); // ungraceful fail
-    }
+	private Node<T> getNode(int index) {
+		if (0 <= index && index < size) {
+			Node<T> it = front;
+			while (index > 0) {
+				it = it.next;
+				index--;
+			}
+			return it;
+		}
+		throw new IndexOutOfBoundsException("Index out of bounds: index was "
+				+ index + " and size was " + size); // ungraceful fail
+	}
 
-    public T get(int index) {
-    	return getNode(index).getData();
-    }
-    /*
-    Der gc löscht ja objekte auf die keine referenz mehr besteht. prüft er dabei ob die referenzen aus dem nirvana kommen?
-    Wenn aus irgendeinem grund eine node nicht collected wird und der nachfolger dieser node gelöscht wird, zeigt die erste noch immer mit next auf die zuletzt gelöschte.
-    Warum sollte der gc die node nicht löschen? Keine ahnung, aber man sagt ihm seltsames verhalten nach. Die gc-zeilen können gerne weg, es macht nicht viel sinn...
-     */
-    public void remove(int index) {
+	public T get(int index) {
+		return getNode(index).getData();
+	}
+
+	/*
+	 * Der gc löscht ja objekte auf die keine referenz mehr besteht. prüft er
+	 * dabei ob die referenzen aus dem nirvana kommen? Wenn aus irgendeinem
+	 * grund eine node nicht collected wird und der nachfolger dieser node
+	 * gelöscht wird, zeigt die erste noch immer mit next auf die zuletzt
+	 * gelöschte. Warum sollte der gc die node nicht löschen? Keine ahnung, aber
+	 * man sagt ihm seltsames verhalten nach. Die gc-zeilen können gerne weg, es
+	 * macht nicht viel sinn...
+	 */
+	public void remove(int index) {
     	Node<T> toRemove = getNode(index); // if index is invalid: get() will throw error.
     	if (toRemove == front && toRemove == rear) {
             front = rear = null;
