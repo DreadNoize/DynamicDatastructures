@@ -42,30 +42,45 @@ public class DLList<T> implements Iterable<T> {
 		if (isEmpty()) {
 			result.append("List is empty!");
 		} else {
-			result.append("[");
-            for (Node<T> it = front; it.next != null; it = it.next) { // don't go over rear because of formatting
+            for (T it: this) {
 				result.append(it + ", ");
 			}
-           result.append(rear + "]"); // add rear without comma in the end!
 		}
 		return result.toString();
 	}
 
-//	public String printTypes () {
-//
-//	}
+	public String printTypes() {
+		StringBuilder result = new StringBuilder("# of elements is " + size + ". ");
+		if (isEmpty()) {
+			result.append("List is empty!");
+		} else {
+			for (T it : this) {
+				result.append(it.getClass().getSimpleName() + ", ");
+			}
+		}
+		return result.toString();
+	}
 
 	private Node<T> getNode(int index) {
-		if (0 <= index && index < size) {
+		if (0 <= index && index < (size / 2)) {
 			Node<T> it = front;
 			while (index > 0) {
 				it = it.next;
 				index--;
 			}
 			return it;
+		} else if (index >= (size / 2) && index < size) {
+			Node<T> it = rear;
+			index = size - index - 1;
+			while (index > 0) {
+				it = it.prev;
+				index--;
+			}
+			return it;
 		}
-		throw new IndexOutOfBoundsException("Index out of bounds: index was "
-				+ index + " and size was " + size); // ungraceful fail
+		throw new IndexOutOfBoundsException(
+				"Index out of bounds: index was " + index
+				+ " and size was " + size); // ungraceful fail
 	}
 
 	public T get(int index) {
