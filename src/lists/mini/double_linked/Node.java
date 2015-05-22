@@ -15,7 +15,10 @@ public class Node<T> {
 
 	public T getData() { return data; }
 
-	public void setData(T data) { this.data = data; }
+	public void setData(T data) {
+		if (data != null) {
+			this.data = data; }
+	}
 
 	public void setPrev(Node<T> prev) {
 		if (prev != null) {
