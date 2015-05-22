@@ -1,6 +1,11 @@
 package double_linked;
 
-public class DLList<T> {
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
+import lists.double_linked.Node;
+
+public class DLList<T> implements Iterable<T> {
     private int size;
 
 	private Node<T> front;
@@ -45,6 +50,10 @@ public class DLList<T> {
 		return result.toString();
 	}
 
+//	public String printTypes () {
+//
+//	}
+
 	private Node<T> getNode(int index) {
 		if (0 <= index && index < size) {
 			Node<T> it = front;
@@ -62,9 +71,8 @@ public class DLList<T> {
 		return getNode(index).getData();
 	}
 
-	public void remove(int index) {
-    	Node<T> toRemove = getNode(index); // if index is invalid: get() will throw error.
-    	if (toRemove == front && toRemove == rear) {
+	private void removeNode (Node<T> toRemove) {
+		if (toRemove == front && toRemove == rear) {
             front = rear = null;
         }
         else if (toRemove == front) {
@@ -80,5 +88,45 @@ public class DLList<T> {
             toRemove.next.prev = toRemove.prev;
         }
     size--;
-    }
+	}
+
+	public void remove(int index) {
+		removeNode(getNode(index)); // if index is invalid: getNode will err.
+	}
+
+	class DLLIterator implements Iterator<T> {
+		Node<T> current = null;
+
+		@Override
+		public boolean hasNext() {
+			if (current == null) {
+				return front != null;
+			}
+			return current.next != null;
+		}
+
+		@Override
+		public T next() {
+			if (isEmpty())
+				throw new NoSuchElementException();
+			if (current == null && front != null) {
+				current = front;
+			} else {
+				if (current.next == null)
+					throw new NoSuchElementException();
+				current = current.next;
+			}
+			return current.getData();
+		}
+
+		@Override
+		public void remove() {
+			removeNode(current);
+		}
+	}
+
+	@Override
+	public Iterator<T> iterator() {
+		return new DLLIterator();
+	}
 }
