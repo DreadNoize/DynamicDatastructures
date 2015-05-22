@@ -5,7 +5,7 @@ package double_linked;
 
 public class DLLTest {
     public static void main(String[] args) {
-        DLList<Object> test = new DLList<Object>("hallo", "hier", "ist was noch fehlt:", "remove() methode", "diese Aussage ist:", true); // varargs
+        DLList<Object> test = new DLList<Object>("hallo", "hier", "ist was noch fehlt:", "remove() methode", "diese Aussage ist:", true);
         assert !test.isEmpty();
         System.out.println(test.getSize());
         System.out.println(test.get(0));

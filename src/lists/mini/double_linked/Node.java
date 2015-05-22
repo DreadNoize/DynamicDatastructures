@@ -51,9 +51,4 @@ public class Node<T> {
 	public String toString() {
 		return data.toString();
 	}
-	
-	public String getType() {
-		return data.getClass().getName();
-	}
-
 }

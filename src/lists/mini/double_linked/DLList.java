@@ -22,12 +22,11 @@ public class DLList<T> implements Iterable<T> {
 	}
 
 	public void add(T data) {
-		Node<T> toAdd = new Node<T>(data);
+		Node<T> toAdd = new Node<>(data);
 		if (isEmpty()) {
 			front = rear = toAdd;
 		} else {
-			toAdd.setPrev(rear); // also handles setting rear.next to this
-			rear.next = toAdd;
+			toAdd.setPrev(rear); // also handles setting rear.next to toAdd
 			rear = toAdd;
 		}
 		size++;
@@ -46,7 +45,7 @@ public class DLList<T> implements Iterable<T> {
 		return result.toString();
 	}
 
-	public String printTypes() {
+	public String printTypes() { // sinnvoll wenn T Object ist; sonst vielleicht noch bei vererbung
 		StringBuilder result = new StringBuilder("# of elements is " + size + ". ");
 		if (isEmpty()) {
 			result.append("List is empty!");
