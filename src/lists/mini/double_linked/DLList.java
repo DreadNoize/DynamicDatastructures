@@ -30,6 +30,7 @@ public class DLList<T> implements Iterable<T> {
 			front = rear = toAdd;
 		} else {
 			toAdd.setPrev(rear); // also handles setting rear.next to this
+			rear.next = toAdd;
 			rear = toAdd;
 		}
 		size++;
