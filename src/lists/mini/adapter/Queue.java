@@ -1,4 +1,4 @@
-package ringpuffer;
+package adapter;
 
 public interface Queue {
 	public boolean isEmpty();
