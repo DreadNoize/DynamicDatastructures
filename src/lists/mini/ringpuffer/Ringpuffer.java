@@ -14,6 +14,8 @@ public class Ringpuffer {
 			arrSize = cap;
 			arli = new int[arrSize];
 			arli[0] = -1; // -1 definition of empty
+		} else {
+			throw new IllegalArgumentException("arr of negative or 0 length makes no sense!");
 		}
 	}
 
@@ -26,7 +28,6 @@ public class Ringpuffer {
 
 	private boolean isFull() { // reclaim somehow? isHalfFull() is tricky
 		if (size == arrSize) {
-			System.out.println(first == end % arrSize && arli[first] != -1);
 			return first == end && arli[first] != -1; // maybe more checking
 														// later?
 		}
@@ -40,18 +41,20 @@ public class Ringpuffer {
 			end = (end + 1) % arrSize;
 		} else {
 			enlarge();
-			offer(data);
+			arli[end] = data;
+			end = (end + 1) % arrSize;
 		}
 		size++;
 	}
 
 	private void enlarge() {
-		arrSize *= 2;
 		System.out.print("enlarging to ");
+		end = arrSize;
+		arrSize *= 2;
 		int[] newArr = new int[arrSize];
 		System.arraycopy(arli, 0, newArr, 0, arli.length);
 		arli = newArr;
-		System.out.println(Arrays.toString(arli));
+		System.out.println(arli.length);
 		newArr = null;
 	}
 

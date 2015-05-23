@@ -3,7 +3,7 @@ package ringpuffer;
 public class testBuffer {
 
 	public static void main(String[] args) {
-		Ringpuffer r1 = new Ringpuffer(5);
+		Ringpuffer r1 = new Ringpuffer(1);
 
 		for (int i = 0; i < 16; i++) {
 			r1.offer(i);
