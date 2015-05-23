@@ -1,7 +1,5 @@
 package ringpuffer;
 
-import java.util.Arrays;
-
 public class Ringpuffer {
 	private int arrSize;
 	private int[] arli;
@@ -28,11 +26,9 @@ public class Ringpuffer {
 
 	private boolean isFull() { // reclaim somehow? isHalfFull() is tricky
 		if (size == arrSize) {
-			return first == end && arli[first] != -1; // maybe more checking
-														// later?
+			return first == end && arli[first] != -1;
 		}
-		return false; // a little dangerous when there are inconsistencies
-						// between size and arrSize
+		return false;
 	}
 
 	public void offer(int data) {
@@ -47,13 +43,20 @@ public class Ringpuffer {
 		size++;
 	}
 
+	/**
+	 * this method copies arli's values in an array of twice the size in such a way that 'first' of arli is copied to newArr[0].
+	 */
 	private void enlarge() {
 		System.out.print("enlarging to ");
-		end = arrSize;
+		int[] newArr = new int[arrSize * 2];
+		for (int i = 0; i < size; i++) {
+			newArr[i] = arli[first];
+			first = (first+1) % (arrSize);
+		}
+		arli  = newArr;
+		first = 0;
+		end   = size;
 		arrSize *= 2;
-		int[] newArr = new int[arrSize];
-		System.arraycopy(arli, 0, newArr, 0, arli.length);
-		arli = newArr;
 		System.out.println(arli.length);
 		newArr = null;
 	}
@@ -77,6 +80,5 @@ public class Ringpuffer {
 	}
 }
 
-// TODO: emptyval = -1, poisonVal -1?
 // TODO: reclaim space by size
 // TODO: when enlarging put stuff in the beginning of array
