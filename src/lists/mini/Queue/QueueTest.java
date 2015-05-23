@@ -4,7 +4,8 @@ import java.util.stream.IntStream;
 
 import adapter.QueueAdapter;
 
-/* assert requires the -ea (enable assertions) flag for jvm.
+/* assert in Ringpuffer implementation requires the -ea (enable assertions) flag for jvm.
+ * However, it also works fine without.
  * In eclipse go to 'Run → Run conf → arguments tab → vm options field
  *
  * IntStream requires the Java 8 Stream API. For this:

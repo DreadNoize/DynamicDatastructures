@@ -3,6 +3,7 @@ package double_linked;
 import java.util.stream.IntStream;
 
 /* assert requires the -ea (enable assertions) flag for jvm.
+ * assert is not needed for function and will be skipped if no -ea is passed.
  * In eclipse go to 'Run → Run conf → arguments tab → vm options field
  *
  * IntStream requires the Java 8 Stream API. For this:
